@@ -6,14 +6,15 @@ const dishes = require('./data/dishes');
 
 const app = express();
 const httpServer = createServer(app);
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173", // Vite 默认端口
+    origin: corsOrigin, // Vite 默认端口
     methods: ["GET", "POST"]
   }
 });
 
-app.use(cors());
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 
 // 存储房间和用户数据

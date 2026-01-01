@@ -1,9 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)"
+      "Bash",
+      "Edit",
+      "Write",
+      "Read",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "WebSearch",
+      "Task"
     ],
-    "deny": [],
-    "ask": []
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)"
+    ],
+    "defaultMode": "acceptEdits"
   }
 }
