@@ -25,6 +25,16 @@ function generateRoomCode() {
   return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
+// Fisher-Yates 洗牌算法，随机打乱菜品顺序
+function shuffleDishes(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
 // 获取菜品列表
 app.get('/api/dishes', (req, res) => {
   res.json(dishes);
@@ -44,7 +54,7 @@ io.on('connection', (socket) => {
         likes: new Set()
       }],
       matches: [],
-      dishes: [...dishes] // 复制菜品列表
+      dishes: shuffleDishes(dishes) // 随机打乱菜品顺序
     };
 
     rooms.set(roomCode, room);
@@ -148,9 +158,11 @@ io.on('connection', (socket) => {
       // 重置所有用户的喜欢列表
       room.users.forEach(user => user.likes.clear());
       room.matches = [];
+      // 重新打乱菜品顺序
+      room.dishes = shuffleDishes(dishes);
 
-      // 通知所有用户重置
-      io.to(roomCode).emit('room-reset');
+      // 通知所有用户重置，并发送新的菜品顺序
+      io.to(roomCode).emit('room-reset', { dishes: room.dishes });
 
       console.log(`房间重置: ${roomCode}`);
     }

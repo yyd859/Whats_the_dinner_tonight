@@ -215,9 +215,13 @@ onMounted(() => {
     }, 3000);
   });
 
-  socket.on('room-reset', () => {
+  socket.on('room-reset', (data) => {
     matches.value = [];
     currentIndex.value = 0;
+    // 使用服务器发送的新打乱顺序
+    if (data && data.dishes) {
+      dishes.value = data.dishes;
+    }
     currentDish.value = dishes.value[0];
   });
 });
