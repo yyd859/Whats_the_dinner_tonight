@@ -31,13 +31,18 @@
 3.  这就是你梦寐以求的 **后端 HTTPS 地址**！
 
 #### 3. 更新前端配置
-1.  拿到上面的地址后，修改本地 `frontend/.env` 文件：
-    ```
-    VITE_SOCKET_URL=https://d1xxxxxx.cloudfront.net
-    ```
-    (注意加上 `https://`)
-2.  提交代码 (`git push`)。
-3.  Amplify 会自动检测到更新并重新部署。
+1.  **在 Amplify 控制台中设置环境变量**：
+    *   因为 `.env` 文件被 git 忽略了，所以你修改本地文件推上去也没用。
+    *   去 **Amplify 控制台** -> 你的应用 -> **Hosting** -> **Environment variables**。
+    *   点击 **Manage variables**。
+    *   添加变量：
+        *   Key: `VITE_SOCKET_URL`
+        *   Value: `https://d1xxxxxx.cloudfront.net` (填你刚才创建的 CloudFront 域名)
+    *   保存。
+
+2.  **重新部署**：
+    *   去 **Builds** 页面，点击 **Trigger redesign / Redeploy this version**，或者随便提交一点空代码 (`git commit --allow-empty`) 推送上去触发构建。
+    *   构建时，Amplify 会自动把这个变量注入到前端代码里。
 
 ---
 
