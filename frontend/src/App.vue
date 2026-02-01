@@ -22,6 +22,7 @@
     <div class="main-content">
       <!-- 未连接状态 -->
       <div v-if="!roomCode" class="welcome-screen">
+        <p v-if="appError" class="error-message" style="background: white; padding: 10px; border-radius: 8px;">{{ appError }}</p>
         <div class="welcome-card">
           <h2>开始匹配美食</h2>
           <div class="button-group">
@@ -108,10 +109,15 @@ import { io } from 'socket.io-client';
 import SwipeCard from './components/SwipeCard.vue';
 
 const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
-if (!import.meta.env.VITE_SOCKET_URL) {
-  console.warn('Missing VITE_SOCKET_URL; defaulting to http://localhost:3000.');
+let socket = null;
+
+const appError = ref('');
+
+// Global error handler for this component
+const handleError = (e) => {
+  console.error(e);
+  appError.value = e.message || 'Unknown error occurred';
 }
-const socket = io(socketUrl);
 
 const roomCode = ref('');
 const joinRoomCode = ref('');
@@ -197,33 +203,48 @@ const resetRoom = () => {
 
 // Socket 事件监听
 onMounted(() => {
-  socket.on('user-joined', () => {
-    userCount.value = 2;
-  });
+  try {
+    console.log('Connecting to socket URL:', socketUrl);
+    socket = io(socketUrl, {
+      transports: ['websocket', 'polling'] // force generic transports
+    });
+    
+    socket.on('connect_error', (err) => {
+      console.error('Socket connection error:', err);
+      // Don't show alert immediately to avoid annoyance, but log it
+      errorMessage.value = `连接服务器失败: ${err.message} (URL: ${socketUrl})`;
+    });
 
-  socket.on('user-left', () => {
-    userCount.value = 1;
-  });
+    socket.on('user-joined', () => {
+      userCount.value = 2;
+    });
 
-  socket.on('match-found', ({ dish }) => {
-    matches.value.push(dish);
-    lastMatch.value = dish;
-    showMatchAnimation.value = true;
+    socket.on('user-left', () => {
+      userCount.value = 1;
+    });
 
-    setTimeout(() => {
-      showMatchAnimation.value = false;
-    }, 3000);
-  });
+    socket.on('match-found', ({ dish }) => {
+      matches.value.push(dish);
+      lastMatch.value = dish;
+      showMatchAnimation.value = true;
 
-  socket.on('room-reset', (data) => {
-    matches.value = [];
-    currentIndex.value = 0;
-    // 使用服务器发送的新打乱顺序
-    if (data && data.dishes) {
-      dishes.value = data.dishes;
-    }
-    currentDish.value = dishes.value[0];
-  });
+      setTimeout(() => {
+        showMatchAnimation.value = false;
+      }, 3000);
+    });
+
+    socket.on('room-reset', (data) => {
+      matches.value = [];
+      currentIndex.value = 0;
+      // 使用服务器发送的新打乱顺序
+      if (data && data.dishes) {
+        dishes.value = data.dishes;
+      }
+      currentDish.value = dishes.value[0];
+    });
+  } catch (e) {
+    handleError(e);
+  }
 });
 
 onUnmounted(() => {

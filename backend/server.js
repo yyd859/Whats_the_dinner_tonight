@@ -40,6 +40,11 @@ app.get('/api/dishes', (req, res) => {
   res.json(dishes);
 });
 
+// 健康检查路由 (AWS EB 需要)
+app.get('/', (req, res) => {
+  res.status(200).send('Dinner Match Backend is Running');
+});
+
 // Socket.IO 连接处理
 io.on('connection', (socket) => {
   console.log('用户连接:', socket.id);
