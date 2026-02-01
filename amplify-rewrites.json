@@ -1,17 +1,5 @@
 [
     {
-        "source": "/socket.io/<*>",
-        "target": "http://Dinner-match-backend-env.eba-aticiup9.ap-northeast-1.elasticbeanstalk.com/socket.io/<*>",
-        "status": "200",
-        "condition": null
-    },
-    {
-        "source": "/api/<*>",
-        "target": "http://Dinner-match-backend-env.eba-aticiup9.ap-northeast-1.elasticbeanstalk.com/api/<*>",
-        "status": "200",
-        "condition": null
-    },
-    {
         "source": "/<*>",
         "target": "/index.html",
         "status": "200",
