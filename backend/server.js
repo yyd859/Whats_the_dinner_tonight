@@ -6,14 +6,15 @@ const dishes = require('./data/dishes');
 
 const app = express();
 const httpServer = createServer(app);
+const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173", // Vite 默认端口
+    origin: corsOrigin, // Vite 默认端口
     methods: ["GET", "POST"]
   }
 });
 
-app.use(cors());
+app.use(cors({ origin: corsOrigin }));
 app.use(express.json());
 
 // 存储房间和用户数据
@@ -22,6 +23,16 @@ const rooms = new Map();
 // 生成随机房间码
 function generateRoomCode() {
   return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+// Fisher-Yates 洗牌算法，随机打乱菜品顺序
+function shuffleDishes(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
 }
 
 // 获取菜品列表
@@ -43,7 +54,7 @@ io.on('connection', (socket) => {
         likes: new Set()
       }],
       matches: [],
-      dishes: [...dishes] // 复制菜品列表
+      dishes: shuffleDishes(dishes) // 随机打乱菜品顺序
     };
 
     rooms.set(roomCode, room);
@@ -147,9 +158,11 @@ io.on('connection', (socket) => {
       // 重置所有用户的喜欢列表
       room.users.forEach(user => user.likes.clear());
       room.matches = [];
+      // 重新打乱菜品顺序
+      room.dishes = shuffleDishes(dishes);
 
-      // 通知所有用户重置
-      io.to(roomCode).emit('room-reset');
+      // 通知所有用户重置，并发送新的菜品顺序
+      io.to(roomCode).emit('room-reset', { dishes: room.dishes });
 
       console.log(`房间重置: ${roomCode}`);
     }

@@ -107,7 +107,11 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { io } from 'socket.io-client';
 import SwipeCard from './components/SwipeCard.vue';
 
-const socket = io('http://localhost:3000');
+const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
+if (!import.meta.env.VITE_SOCKET_URL) {
+  console.warn('Missing VITE_SOCKET_URL; defaulting to http://localhost:3000.');
+}
+const socket = io(socketUrl);
 
 const roomCode = ref('');
 const joinRoomCode = ref('');
@@ -211,9 +215,13 @@ onMounted(() => {
     }, 3000);
   });
 
-  socket.on('room-reset', () => {
+  socket.on('room-reset', (data) => {
     matches.value = [];
     currentIndex.value = 0;
+    // 使用服务器发送的新打乱顺序
+    if (data && data.dishes) {
+      dishes.value = data.dishes;
+    }
     currentDish.value = dishes.value[0];
   });
 });
