@@ -1,0 +1,214 @@
+----------------------------------------
+/var/log/nginx/access.log
+----------------------------------------
+185.16.39.146 - - [01/Feb/2026:00:29:36 +0000] "GET / HTTP/1.1" 200 17275 "-" "Wget" "-"
+185.16.39.146 - - [01/Feb/2026:00:41:59 +0000] "GET / HTTP/1.1" 200 17275 "-" "Wget" "-"
+185.16.39.146 - - [01/Feb/2026:00:55:37 +0000] "GET / HTTP/1.1" 200 17275 "-" "Wget" "-"
+185.177.72.22 - - [01/Feb/2026:00:56:26 +0000] "GET / HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:27 +0000] "GET /.git/config HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:27 +0000] "GET /backend/.env HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:27 +0000] "GET /%2eenv HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:27 +0000] "GET /%2f%2eenv HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:27 +0000] "GET /.env HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:28 +0000] "GET /%2egit/%63onfig HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:28 +0000] "GET /%62ackend/%2eenv HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:28 +0000] "GET /%2fbackend%2f%2eenv HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:28 +0000] "GET /%2f%2eaws%2fcredentials HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:29 +0000] "GET /info.php HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:29 +0000] "GET /error/ HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:29 +0000] "GET /api/user HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:29 +0000] "GET /..%5c..%5c..%5c..%5c..%5c..%5cvar/log/apache2/access.log HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:29 +0000] "GET /var/task/next.config.js HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:30 +0000] "GET /var/task/next.config.mjs HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:30 +0000] "GET /var/task/next.config.ts HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:30 +0000] "GET /app/next.config.js HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:30 +0000] "GET /app/next.config.mjs HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:31 +0000] "GET /$(pwd)/next.config.js HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:31 +0000] "GET /$(pwd)/next.config.mjs HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:56:31 +0000] "GET /var/task/nuxt.config.js HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:00 +0000] "GET /var/task/nuxt.config.ts HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:00 +0000] "GET /app/nuxt.config.js HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:01 +0000] "GET /var/task/serverless.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:01 +0000] "GET /var/task/serverless.yaml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:01 +0000] "GET /var/task/serverless.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:01 +0000] "GET /app/serverless.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:01 +0000] "GET /app/serverless.yaml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:02 +0000] "GET /$(pwd)/serverless.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:02 +0000] "GET /$(pwd)/serverless.yaml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:02 +0000] "GET /var/task/package.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:02 +0000] "GET /app/package.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:03 +0000] "GET /$(pwd)/package.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:03 +0000] "GET /var/task/vercel.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:03 +0000] "GET /app/vercel.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:03 +0000] "GET /$(pwd)/vercel.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:04 +0000] "GET /var/task/netlify.toml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:04 +0000] "GET /app/netlify.toml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:04 +0000] "GET /$(pwd)/netlify.toml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:04 +0000] "GET /var/task/docker-compose.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:05 +0000] "GET /var/task/docker-compose.yaml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:05 +0000] "GET /app/docker-compose.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:05 +0000] "GET /$(pwd)/docker-compose.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:05 +0000] "GET /.dockerignore HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:05 +0000] "GET /docker/overlay/config.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:06 +0000] "GET /opt/mailcow-dockerized/mailcow.conf HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:06 +0000] "GET /Dockerfile HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:06 +0000] "GET /docker/registry/config.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:06 +0000] "GET /docker-compose.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:07 +0000] "GET /.docker/config.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:07 +0000] "GET /.docker/secrets.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:07 +0000] "GET /attacker/docker-compose.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:07 +0000] "GET /_vercel/insights HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:07 +0000] "GET /vercel.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:08 +0000] "GET /aws/bucket HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:08 +0000] "GET /aws/buckets HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:08 +0000] "GET /aws/config/s3.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:08 +0000] "GET /aws/s3/credentials HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:09 +0000] "GET /aws/s3/env.env HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:09 +0000] "GET /aws_s3_bucket HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:09 +0000] "GET /aws_s3_config.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:09 +0000] "GET /s3/.aws/config HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:09 +0000] "GET /config/aws.php HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:10 +0000] "GET /.aws/config HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:10 +0000] "GET /aws-codecommit/ HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:10 +0000] "GET /aws.yaml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:10 +0000] "GET /old/aws_config HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:11 +0000] "GET /aws.env.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:11 +0000] "GET /aws.env HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:11 +0000] "GET /aws-ses.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:11 +0000] "GET /aws/ses/smtp.env HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:12 +0000] "GET /aws/metadata HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:12 +0000] "GET /aws.json HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:12 +0000] "GET /aws.yml HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:12 +0000] "GET /.aws/credentials HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.177.72.22 - - [01/Feb/2026:00:58:12 +0000] "GET /.env.aws HTTP/1.1" 200 17275 "-" "curl/8.7.1" "127.0.0.1"
+185.16.39.146 - - [01/Feb/2026:01:08:07 +0000] "GET / HTTP/1.1" 200 17275 "-" "Wget" "-"
+108.48.81.180 - - [01/Feb/2026:01:14:03 +0000] "GET / HTTP/1.1" 200 17275 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" "-"
+108.48.81.180 - - [01/Feb/2026:01:14:04 +0000] "GET /favicon.ico HTTP/1.1" 200 17275 "http://dinner-match-backend-env.eba-aticiup9.ap-northeast-1.elasticbeanstalk.com/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" "-"
+
+
+----------------------------------------
+/var/log/nginx/error.log
+----------------------------------------
+2026/02/01 00:26:54 [warn] 2095#2095: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/02/01 00:26:55 [warn] 2145#2145: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+2026/02/01 00:26:55 [warn] 2146#2146: could not build optimal types_hash, you should increase either types_hash_max_size: 1024 or types_hash_bucket_size: 64; ignoring types_hash_bucket_size
+
+
+----------------------------------------
+/var/log/web.stdout.log
+----------------------------------------
+Feb  1 00:26:55 ip-172-31-13-132 web[2091]: > Elastic-Beanstalk-Sample-App@0.0.1 start
+Feb  1 00:26:55 ip-172-31-13-132 web[2091]: > node app.js
+Feb  1 00:26:55 ip-172-31-13-132 web[2133]: Server running at http://127.0.0.1:8080/
+
+
+----------------------------------------
+/var/log/eb-engine.log
+----------------------------------------
+2026/02/01 00:31:23.118212 [INFO] Manifest name is : manifest_1769905861436
+2026/02/01 00:31:23.118214 [INFO] Download app version manifest
+2026/02/01 00:31:23.118392 [INFO] Downloading: bucket: elasticbeanstalk-ap-northeast-1-544205545730, object: resources/environments/e-3crxmagynb/_runtime/versions/manifest_1769905861436, expected bucket owner: 544205545730
+2026/02/01 00:31:23.173859 [INFO] Download successful111bytes downloaded
+2026/02/01 00:31:23.174040 [INFO] Trying to read and parse version manifest...
+2026/02/01 00:31:23.174118 [INFO] Downloading: bucket: elasticbeanstalk-ap-northeast-1-544205545730, object: resources/environments/e-3crxmagynb/_runtime/_versions/dinner-match-backend/V2, expected bucket owner: 544205545730
+2026/02/01 00:31:23.213860 [INFO] Download successful18131bytes downloaded
+2026/02/01 00:31:23.214116 [INFO] Executing instruction: ElectLeader
+2026/02/01 00:31:23.214122 [INFO] Running leader election for instance i-060cef28f79c5c80e...
+2026/02/01 00:31:23.214124 [INFO] Calling the cfn-elect-cmd-leader to elect the command leader.
+2026/02/01 00:31:23.214136 [INFO] Running command: /opt/aws/bin/cfn-elect-cmd-leader --stack arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd --command-name ElasticBeanstalkCommand-AWSEBAutoScalingGroup --invocation-id 15685c79-ceb8-4f64-920b-8a409dabea04 --listener-id i-060cef28f79c5c80e --region ap-northeast-1
+2026/02/01 00:31:23.553833 [INFO] Instance is Leader.
+2026/02/01 00:31:23.553895 [INFO] Executing instruction: stopSqsd
+2026/02/01 00:31:23.553901 [INFO] This is a web server environment instance, skip stop sqsd daemon ...
+2026/02/01 00:31:23.553904 [INFO] Executing instruction: PreBuildEbExtension
+2026/02/01 00:31:23.553908 [INFO] Starting executing the config set Infra-EmbeddedPreBuild.
+2026/02/01 00:31:23.553921 [INFO] Running command: /opt/aws/bin/cfn-init -s arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd -r AWSEBAutoScalingGroup --region ap-northeast-1 --configsets Infra-EmbeddedPreBuild
+2026/02/01 00:31:23.885462 [INFO] Finished executing the config set Infra-EmbeddedPreBuild.
+
+2026/02/01 00:31:23.885488 [INFO] Executing instruction: StageApplication
+2026/02/01 00:31:23.885492 [INFO] Recreating /var/app/staging/
+2026/02/01 00:31:23.885883 [INFO] extracting /opt/elasticbeanstalk/deployment/app_source_bundle to /var/app/staging/
+2026/02/01 00:31:23.885902 [INFO] Running command: /usr/bin/unzip -q -o /opt/elasticbeanstalk/deployment/app_source_bundle -d /var/app/staging/
+2026/02/01 00:31:23.889344 [INFO] warning:  /opt/elasticbeanstalk/deployment/app_source_bundle appears to use backslashes as path separators
+
+2026/02/01 00:31:23.889359 [ERROR] An error occurred during execution of command [app-deploy] - [StageApplication]. Stop running the command. Error: Command /usr/bin/unzip -q -o /opt/elasticbeanstalk/deployment/app_source_bundle -d /var/app/staging/ failed with error exit status 1. Stderr:warning:  /opt/elasticbeanstalk/deployment/app_source_bundle appears to use backslashes as path separators
+ 
+
+2026/02/01 00:31:23.889366 [INFO] Executing cleanup logic
+2026/02/01 00:31:23.889434 [INFO] CommandService Response: {"status":"FAILURE","api_version":"1.0","results":[{"status":"FAILURE","msg":"Engine execution has encountered an error.","returncode":1,"events":[{"msg":"Instance deployment: Your source bundle has issues that caused the deployment to fail. For details, see 'eb-engine.log'.","timestamp":1769905883889,"severity":"ERROR"},{"msg":"Instance deployment failed. For details, see 'eb-engine.log'.","timestamp":1769905883889,"severity":"ERROR"}]}]}
+
+2026/02/01 00:31:23.890456 [INFO] Platform Engine finished execution on command: app-deploy
+
+2026/02/01 01:17:44.345319 [INFO] Starting...
+2026/02/01 01:17:44.345372 [INFO] Starting EBPlatform-PlatformEngine
+2026/02/01 01:17:44.345393 [INFO] reading event message file
+2026/02/01 01:17:44.345803 [INFO] Engine received EB command cfn-hup-exec
+
+2026/02/01 01:17:44.438023 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd -r AWSEBAutoScalingGroup --region ap-northeast-1
+2026/02/01 01:17:44.771527 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd -r AWSEBBeanstalkMetadata --region ap-northeast-1
+2026/02/01 01:17:45.080171 [INFO] checking whether command app-deploy is applicable to this instance...
+2026/02/01 01:17:45.080185 [INFO] this command is applicable to the instance, thus instance should execute command
+2026/02/01 01:17:45.080187 [INFO] Engine command: (app-deploy)
+
+2026/02/01 01:17:45.080190 [INFO] Downloading EB Application...
+2026/02/01 01:17:45.080192 [INFO] Region: ap-northeast-1
+2026/02/01 01:17:45.080195 [INFO] envID: e-3crxmagynb
+2026/02/01 01:17:45.080197 [INFO] envBucket: elasticbeanstalk-ap-northeast-1-544205545730
+2026/02/01 01:17:45.080200 [INFO] accountID: 544205545730
+2026/02/01 01:17:45.080203 [INFO] Using manifest file name from command request
+2026/02/01 01:17:45.080210 [INFO] Manifest name is : manifest_1769908642707
+2026/02/01 01:17:45.080213 [INFO] Download app version manifest
+2026/02/01 01:17:45.080401 [INFO] Downloading: bucket: elasticbeanstalk-ap-northeast-1-544205545730, object: resources/environments/e-3crxmagynb/_runtime/versions/manifest_1769908642707, expected bucket owner: 544205545730
+2026/02/01 01:17:45.120788 [INFO] Download successful111bytes downloaded
+2026/02/01 01:17:45.120964 [INFO] Trying to read and parse version manifest...
+2026/02/01 01:17:45.121046 [INFO] Downloading: bucket: elasticbeanstalk-ap-northeast-1-544205545730, object: resources/environments/e-3crxmagynb/_runtime/_versions/dinner-match-backend/v3, expected bucket owner: 544205545730
+2026/02/01 01:17:45.142146 [INFO] Download successful18204bytes downloaded
+2026/02/01 01:17:45.142404 [INFO] Executing instruction: ElectLeader
+2026/02/01 01:17:45.142409 [INFO] Running leader election for instance i-060cef28f79c5c80e...
+2026/02/01 01:17:45.142412 [INFO] Calling the cfn-elect-cmd-leader to elect the command leader.
+2026/02/01 01:17:45.142422 [INFO] Running command: /opt/aws/bin/cfn-elect-cmd-leader --stack arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd --command-name ElasticBeanstalkCommand-AWSEBAutoScalingGroup --invocation-id e22ec1ce-4119-4a8a-a782-eb6e88b26cef --listener-id i-060cef28f79c5c80e --region ap-northeast-1
+2026/02/01 01:17:45.469617 [INFO] Instance is Leader.
+2026/02/01 01:17:45.469669 [INFO] Executing instruction: stopSqsd
+2026/02/01 01:17:45.469811 [INFO] This is a web server environment instance, skip stop sqsd daemon ...
+2026/02/01 01:17:45.469815 [INFO] Executing instruction: PreBuildEbExtension
+2026/02/01 01:17:45.469818 [INFO] Starting executing the config set Infra-EmbeddedPreBuild.
+2026/02/01 01:17:45.469833 [INFO] Running command: /opt/aws/bin/cfn-init -s arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd -r AWSEBAutoScalingGroup --region ap-northeast-1 --configsets Infra-EmbeddedPreBuild
+2026/02/01 01:17:45.790399 [INFO] Finished executing the config set Infra-EmbeddedPreBuild.
+
+2026/02/01 01:17:45.790421 [INFO] Executing instruction: StageApplication
+2026/02/01 01:17:45.790424 [INFO] Recreating /var/app/staging/
+2026/02/01 01:17:45.790619 [INFO] extracting /opt/elasticbeanstalk/deployment/app_source_bundle to /var/app/staging/
+2026/02/01 01:17:45.790629 [INFO] Running command: /usr/bin/unzip -q -o /opt/elasticbeanstalk/deployment/app_source_bundle -d /var/app/staging/
+2026/02/01 01:17:45.794157 [INFO] warning:  /opt/elasticbeanstalk/deployment/app_source_bundle appears to use backslashes as path separators
+
+2026/02/01 01:17:45.794175 [ERROR] An error occurred during execution of command [app-deploy] - [StageApplication]. Stop running the command. Error: Command /usr/bin/unzip -q -o /opt/elasticbeanstalk/deployment/app_source_bundle -d /var/app/staging/ failed with error exit status 1. Stderr:warning:  /opt/elasticbeanstalk/deployment/app_source_bundle appears to use backslashes as path separators
+ 
+
+2026/02/01 01:17:45.794178 [INFO] Executing cleanup logic
+2026/02/01 01:17:45.794246 [INFO] CommandService Response: {"status":"FAILURE","api_version":"1.0","results":[{"status":"FAILURE","msg":"Engine execution has encountered an error.","returncode":1,"events":[{"msg":"Instance deployment: Your source bundle has issues that caused the deployment to fail. For details, see 'eb-engine.log'.","timestamp":1769908665794,"severity":"ERROR"},{"msg":"Instance deployment failed. For details, see 'eb-engine.log'.","timestamp":1769908665794,"severity":"ERROR"}]}]}
+
+2026/02/01 01:17:45.795227 [INFO] Platform Engine finished execution on command: app-deploy
+
+2026/02/01 01:18:54.319441 [INFO] Starting...
+2026/02/01 01:18:54.319496 [INFO] Starting EBPlatform-PlatformEngine
+2026/02/01 01:18:54.319516 [INFO] reading event message file
+2026/02/01 01:18:54.319825 [INFO] Engine received EB command cfn-hup-exec
+
+2026/02/01 01:18:54.397594 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd -r AWSEBAutoScalingGroup --region ap-northeast-1
+2026/02/01 01:18:54.700572 [INFO] Running command: /opt/aws/bin/cfn-get-metadata -s arn:aws:cloudformation:ap-northeast-1:544205545730:stack/awseb-e-3crxmagynb-stack/7eb5ef90-ff04-11f0-a7dd-0affeefa5ccd -r AWSEBBeanstalkMetadata --region ap-northeast-1
+2026/02/01 01:18:55.020687 [INFO] checking whether command tail-log is applicable to this instance...
+2026/02/01 01:18:55.020701 [INFO] this command is applicable to the instance, thus instance should execute command
+2026/02/01 01:18:55.020703 [INFO] Engine command: (tail-log)
+
+2026/02/01 01:18:55.020753 [INFO] Executing instruction: GetTailLogs
+2026/02/01 01:18:55.020756 [INFO] Tail Logs...
+2026/02/01 01:18:55.021354 [INFO] Running command: tail -n 100 /var/log/nginx/access.log
+2026/02/01 01:18:55.023862 [INFO] Running command: tail -n 100 /var/log/nginx/error.log
+2026/02/01 01:18:55.025864 [INFO] Running command: tail -n 100 /var/log/web.stdout.log
+2026/02/01 01:18:55.027610 [INFO] Running command: tail -n 100 /var/log/eb-engine.log
+
+
+----------------------------------------
+/var/log/eb-hooks.log
+----------------------------------------
+
+
