@@ -1,0 +1,192 @@
+0
+
+2026-02-01T20:56:43.457Z [INFO]: # Build environment configured with Standard build compute type: 8GiB Memory, 4vCPUs, 128GB Disk Space
+
+1
+
+2026-02-01T20:56:44.356Z [INFO]: # Cloning repository: git@github.com:yyd859/Whats_the_dinner_tonight.git
+
+2
+
+2026-02-01T20:56:45.303Z [INFO]: 
+
+3
+
+2026-02-01T20:56:45.304Z [INFO]: Cloning into 'Whats_the_dinner_tonight'...
+
+4
+
+2026-02-01T20:56:45.304Z [INFO]: # Switching to commit: 1acaf10146ac63ad60a1ad0b6fe4583a8ea11d7c
+
+5
+
+2026-02-01T20:56:45.315Z [INFO]: Note: switching to '1acaf10146ac63ad60a1ad0b6fe4583a8ea11d7c'.
+
+6
+
+                                 You are in 'detached HEAD' state. You can look around, make experimental
+
+7
+
+                                 changes and commit them, and you can discard any commits you make in this
+
+8
+
+                                 state without impacting any branches by switching back to a branch.
+
+9
+
+                                 If you want to create a new branch to retain commits you create, you may
+
+10
+
+                                 do so (now or later) by using -c with the switch command. Example:
+
+11
+
+                                 git switch -c <new-branch-name>
+
+12
+
+                                 Or undo this operation with:
+
+13
+
+                                 git switch -
+
+14
+
+                                 Turn off this advice by setting config variable advice.detachedHead to false
+
+15
+
+                                 HEAD is now at 1acaf10 fix: use npm install instead of npm ci
+
+16
+
+2026-02-01T20:56:45.409Z [INFO]: Successfully cleaned up Git credentials
+
+17
+
+2026-02-01T20:56:45.410Z [INFO]: # Checking for Git submodules at: /codebuild/output/src1580789768/src/Whats_the_dinner_tonight/.gitmodules
+
+18
+
+2026-02-01T20:56:45.414Z [INFO]: # Retrieving environment cache...
+
+19
+
+2026-02-01T20:56:45.474Z [WARNING]: ! Unable to write cache: {"code":"ERR_BAD_REQUEST","message":"Request failed with status code 404"})}
+
+20
+
+2026-02-01T20:56:45.474Z [INFO]: ---- Setting Up SSM Secrets ----
+
+21
+
+2026-02-01T20:56:45.474Z [INFO]: SSM params {"Path":"/amplify/d1ynehzcbrm2k2/iteration-2/","WithDecryption":true}
+
+22
+
+2026-02-01T20:56:45.515Z [WARNING]: !Failed to set up process.env.secrets
+
+23
+
+2026-02-01T20:56:45.887Z [INFO]: # No package override configuration found.
+
+24
+
+2026-02-01T20:56:45.891Z [INFO]: # Retrieving cache...
+
+25
+
+2026-02-01T20:56:45.932Z [INFO]: # Retrieved cache
+
+26
+
+2026-02-01T20:56:50.802Z [INFO]: ## Starting Backend Build
+
+27
+
+                                 ## Checking for associated backend environment...
+
+28
+
+                                 ## No backend environment association found, continuing...
+
+29
+
+                                 ## Completed Backend Build
+
+30
+
+2026-02-01T20:56:50.807Z [INFO]: {"backendDuration": 0}
+
+31
+
+                                 ## Starting Frontend Build
+
+32
+
+                                 # Starting phase: preBuild
+
+33
+
+                                 # Executing command: cd frontend && npm install
+
+34
+
+2026-02-01T20:57:18.765Z [INFO]: added 39 packages, and audited 40 packages in 23s
+
+35
+
+2026-02-01T20:57:18.774Z [INFO]: 4 packages are looking for funding
+
+36
+
+                                 run `npm fund` for details
+
+37
+
+2026-02-01T20:57:18.775Z [INFO]: 3 moderate severity vulnerabilities
+
+38
+
+                                 To address all issues (including breaking changes), run:
+
+39
+
+                                 npm audit fix --force
+40                                                                  Run `npm audit` for details.
+
+41
+
+2026-02-01T20:57:18.789Z [INFO]: # Completed phase: preBuild
+
+42
+
+                                 # Starting phase: build
+
+43
+
+                                 # Executing command: cd frontend && npm run build
+
+44
+
+2026-02-01T20:57:18.789Z [WARNING]: /root/.rvm/scripts/extras/bash_zsh_support/chpwd/function.sh: line 5: cd: frontend: No such file or directory
+
+45
+
+2026-02-01T20:57:18.867Z [ERROR]: !!! Build failed
+
+46
+
+2026-02-01T20:57:18.867Z [ERROR]: !!! Error: Command failed with exit code 1
+
+47
+
+2026-02-01T20:57:18.867Z [INFO]: # Starting environment caching...
+
+48
+
+2026-02-01T20:57:18.868Z [INFO]: # Environment caching completed
