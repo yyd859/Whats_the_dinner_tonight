@@ -65,13 +65,14 @@ async function updateConnectionRoom(connectionId, roomCode) {
 }
 
 // Room operations
-async function createRoom(roomCode, dishes) {
+async function createRoom(roomCode, dishes, categories = []) {
     const ttl = Math.floor(Date.now() / 1000) + (24 * 60 * 60); // 24 hours
     await ddbDocClient.send(new PutCommand({
         TableName: ROOMS_TABLE,
         Item: {
             roomCode,
             dishes,
+            categories,
             matches: [],
             users: [],
             createdAt: Date.now(),

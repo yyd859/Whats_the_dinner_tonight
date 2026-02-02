@@ -12,6 +12,25 @@ const {
 } = require('../lib/db');
 const dishes = require('../lib/dishes');
 
+// Helper to filter dishes by categories
+function getFilteredDishes(categories) {
+    if (!categories || categories.length === 0) return dishes;
+
+    return dishes.filter(dish => {
+        // 大菜：经典四大菜系
+        if (categories.includes('big')) {
+            const bigCats = ["川菜", "粤菜", "湘菜", "鲁菜"];
+            if (bigCats.includes(dish.category)) return true;
+        }
+        // 家常菜：家常相关分类
+        if (categories.includes('home')) {
+            const homeCats = ["家常菜", "素菜", "凉菜", "汤类", "主食"];
+            if (homeCats.includes(dish.category)) return true;
+        }
+        return false;
+    });
+}
+
 exports.handler = async (event) => {
     const connectionId = event.requestContext.connectionId;
     const domain = event.requestContext.domainName;
@@ -33,7 +52,7 @@ exports.handler = async (event) => {
     try {
         switch (action) {
             case 'create-room':
-                return await handleCreateRoom(connectionId, endpoint);
+                return await handleCreateRoom(connectionId, endpoint, data);
 
             case 'join-room':
                 return await handleJoinRoom(connectionId, endpoint, data);
@@ -57,12 +76,18 @@ exports.handler = async (event) => {
     }
 };
 
-async function handleCreateRoom(connectionId, endpoint) {
+async function handleCreateRoom(connectionId, endpoint, data) {
+    const { categories } = data || {};
     const roomCode = generateRoomCode();
-    const shuffledDishes = shuffleArray(dishes);
 
-    // Create room in DynamoDB
-    await createRoom(roomCode, shuffledDishes);
+    let filteredDishes = getFilteredDishes(categories);
+    // 如果过滤后为空（防错），则使用全量
+    if (filteredDishes.length === 0) filteredDishes = dishes;
+
+    const shuffledDishes = shuffleArray(filteredDishes);
+
+    // Create room in DynamoDB with categories
+    await createRoom(roomCode, shuffledDishes, categories);
 
     // Update connection with room code
     await updateConnectionRoom(connectionId, roomCode);
@@ -217,8 +242,11 @@ async function handleResetRoom(connectionId, endpoint, data) {
         return { statusCode: 200, body: 'Room not found' };
     }
 
-    // Reset room state
-    const shuffledDishes = shuffleArray(dishes);
+    // Reset room state using original categories if exists
+    let filteredDishes = getFilteredDishes(room.categories);
+    if (filteredDishes.length === 0) filteredDishes = dishes;
+
+    const shuffledDishes = shuffleArray(filteredDishes);
     await updateRoom(roomCode, {
         dishes: shuffledDishes,
         matches: [],
