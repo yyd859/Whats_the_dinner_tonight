@@ -99,6 +99,8 @@
           </div>
         </div>
       </div>
+    </transition>
+
     <!-- 分类选择弹窗 -->
     <transition name="fade">
       <div v-if="showCategoryModal" class="modal-overlay" @click.self="showCategoryModal = false">
