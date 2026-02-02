@@ -1,0 +1,109 @@
+service: dinner-match-serverless
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: ap-northeast-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    CONNECTIONS_TABLE: ${self:service}-connections-${self:provider.stage}
+    ROOMS_TABLE: ${self:service}-rooms-${self:provider.stage}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:Query
+            - dynamodb:Scan
+          Resource:
+            - !GetAtt ConnectionsTable.Arn
+            - !GetAtt RoomsTable.Arn
+        - Effect: Allow
+          Action:
+            - execute-api:ManageConnections
+          Resource:
+            - arn:aws:execute-api:${self:provider.region}:*:*/@connections/*
+
+functions:
+  # WebSocket handlers
+  connect:
+    handler: backend-serverless/websocket/connect.handler
+    events:
+      - websocket:
+          route: $connect
+  
+  disconnect:
+    handler: backend-serverless/websocket/disconnect.handler
+    events:
+      - websocket:
+          route: $disconnect
+  
+  message:
+    handler: backend-serverless/websocket/message.handler
+    events:
+      - websocket:
+          route: $default
+  
+  # HTTP API handlers
+  getDishes:
+    handler: backend-serverless/http/dishes.handler
+    events:
+      - httpApi:
+          path: /api/dishes
+          method: get
+  
+  healthCheck:
+    handler: backend-serverless/http/health.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+resources:
+  Resources:
+    ConnectionsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CONNECTIONS_TABLE}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: connectionId
+            AttributeType: S
+          - AttributeName: roomCode
+            AttributeType: S
+        KeySchema:
+          - AttributeName: connectionId
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: roomCode-index
+            KeySchema:
+              - AttributeName: roomCode
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+    
+    RoomsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.ROOMS_TABLE}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: roomCode
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roomCode
+            KeyType: HASH
+        TimeToLiveSpecification:
+          AttributeName: ttl
+          Enabled: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3000

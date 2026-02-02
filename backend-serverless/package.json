@@ -1,0 +1,20 @@
+{
+    "name": "dinner-match-serverless-backend",
+    "version": "1.0.0",
+    "description": "Serverless backend for Dinner Match app",
+    "main": "index.js",
+    "scripts": {
+        "deploy": "serverless deploy",
+        "remove": "serverless remove",
+        "logs": "serverless logs -f message -t"
+    },
+    "dependencies": {
+        "@aws-sdk/client-apigatewaymanagementapi": "^3.0.0",
+        "@aws-sdk/client-dynamodb": "^3.0.0",
+        "@aws-sdk/lib-dynamodb": "^3.0.0"
+    },
+    "devDependencies": {
+        "serverless": "^3.0.0",
+        "serverless-offline": "^12.0.0"
+    }
+}
