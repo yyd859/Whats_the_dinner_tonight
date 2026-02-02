@@ -14,6 +14,44 @@
           "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
           "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
         },
+        "iam": {
+          "role": {
+            "statements": [
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "dynamodb:PutItem",
+                  "dynamodb:GetItem",
+                  "dynamodb:UpdateItem",
+                  "dynamodb:DeleteItem",
+                  "dynamodb:Query",
+                  "dynamodb:Scan"
+                ],
+                "Resource": [
+                  {
+                    "Fn::GetAtt": [
+                      "ConnectionsTable",
+                      "Arn"
+                    ]
+                  },
+                  {
+                    "Fn::GetAtt": [
+                      "RoomsTable",
+                      "Arn"
+                    ]
+                  }
+                ]
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "execute-api:ManageConnections"
+                ],
+                "Resource": "arn:aws:execute-api:ap-northeast-1:*:*/@connections/*"
+              }
+            ]
+          }
+        },
         "versionFunctions": true,
         "compiledCloudFormationTemplate": {
           "AWSTemplateFormatVersion": "2010-09-09",
@@ -110,6 +148,38 @@
                         {
                           "Effect": "Allow",
                           "Action": [
+                            "dynamodb:PutItem",
+                            "dynamodb:GetItem",
+                            "dynamodb:UpdateItem",
+                            "dynamodb:DeleteItem",
+                            "dynamodb:Query",
+                            "dynamodb:Scan"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::GetAtt": [
+                                "ConnectionsTable",
+                                "Arn"
+                              ]
+                            },
+                            {
+                              "Fn::GetAtt": [
+                                "RoomsTable",
+                                "Arn"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "execute-api:ManageConnections"
+                          ],
+                          "Resource": "arn:aws:execute-api:ap-northeast-1:*:*/@connections/*"
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
                             "execute-api:ManageConnections"
                           ],
                           "Resource": [
@@ -143,7 +213,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                  "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                  "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
                 },
                 "Handler": "backend-serverless/websocket/connect.handler",
                 "Runtime": "nodejs18.x",
@@ -172,7 +242,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                  "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                  "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
                 },
                 "Handler": "backend-serverless/websocket/disconnect.handler",
                 "Runtime": "nodejs18.x",
@@ -201,7 +271,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                  "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                  "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
                 },
                 "Handler": "backend-serverless/websocket/message.handler",
                 "Runtime": "nodejs18.x",
@@ -230,7 +300,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                  "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                  "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
                 },
                 "Handler": "backend-serverless/http/dishes.handler",
                 "Runtime": "nodejs18.x",
@@ -259,7 +329,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                  "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                  "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
                 },
                 "Handler": "backend-serverless/http/health.handler",
                 "Runtime": "nodejs18.x",
@@ -283,54 +353,54 @@
                 "HealthCheckLogGroup"
               ]
             },
-            "ConnectLambdaVersionSmIeTpFw86bRCV9mzckCKciNEf62pA18RPBvfX7NUQk": {
+            "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "ConnectLambdaFunction"
                 },
-                "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+                "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
               }
             },
-            "DisconnectLambdaVersionfw8Aq4VHeX27YwXNFutkGEYEpzealyMTS7pZN4dX0": {
+            "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "DisconnectLambdaFunction"
                 },
-                "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+                "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
               }
             },
-            "MessageLambdaVersionNJd4XjUpX7i2GJ9B1hDoSp8bx2eafLVbTq90S7uxWqs": {
+            "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "MessageLambdaFunction"
                 },
-                "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+                "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
               }
             },
-            "GetDishesLambdaVersionzvTyqn2bsthGwDSfRmFvVcIGg4gY516pgibvwUvdrHE": {
+            "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "GetDishesLambdaFunction"
                 },
-                "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+                "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
               }
             },
-            "HealthCheckLambdaVersion8P0JbQ3tMBgXXz41Xy3801OTWUzzth4iLhHbF5odPU": {
+            "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "HealthCheckLambdaFunction"
                 },
-                "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+                "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
               }
             },
             "WebsocketsApi": {
@@ -820,7 +890,7 @@
             "ConnectLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "ConnectLambdaVersionSmIeTpFw86bRCV9mzckCKciNEf62pA18RPBvfX7NUQk"
+                "Ref": "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE"
               },
               "Export": {
                 "Name": "sls-dinner-match-serverless-dev-ConnectLambdaFunctionQualifiedArn"
@@ -829,7 +899,7 @@
             "DisconnectLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "DisconnectLambdaVersionfw8Aq4VHeX27YwXNFutkGEYEpzealyMTS7pZN4dX0"
+                "Ref": "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE"
               },
               "Export": {
                 "Name": "sls-dinner-match-serverless-dev-DisconnectLambdaFunctionQualifiedArn"
@@ -838,7 +908,7 @@
             "MessageLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "MessageLambdaVersionNJd4XjUpX7i2GJ9B1hDoSp8bx2eafLVbTq90S7uxWqs"
+                "Ref": "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc"
               },
               "Export": {
                 "Name": "sls-dinner-match-serverless-dev-MessageLambdaFunctionQualifiedArn"
@@ -847,7 +917,7 @@
             "GetDishesLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "GetDishesLambdaVersionzvTyqn2bsthGwDSfRmFvVcIGg4gY516pgibvwUvdrHE"
+                "Ref": "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8"
               },
               "Export": {
                 "Name": "sls-dinner-match-serverless-dev-GetDishesLambdaFunctionQualifiedArn"
@@ -856,7 +926,7 @@
             "HealthCheckLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "HealthCheckLambdaVersion8P0JbQ3tMBgXXz41Xy3801OTWUzzth4iLhHbF5odPU"
+                "Ref": "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0"
               },
               "Export": {
                 "Name": "sls-dinner-match-serverless-dev-HealthCheckLambdaFunctionQualifiedArn"
@@ -935,50 +1005,10 @@
           "backend-serverless/**"
         ],
         "individually": false,
-        "iam": {
-          "role": {
-            "statements": [
-              {
-                "Effect": "Allow",
-                "Action": [
-                  "dynamodb:PutItem",
-                  "dynamodb:GetItem",
-                  "dynamodb:UpdateItem",
-                  "dynamodb:DeleteItem",
-                  "dynamodb:Query",
-                  "dynamodb:Scan"
-                ],
-                "Resource": [
-                  {
-                    "Fn::GetAtt": [
-                      "ConnectionsTable",
-                      "Arn"
-                    ]
-                  },
-                  {
-                    "Fn::GetAtt": [
-                      "RoomsTable",
-                      "Arn"
-                    ]
-                  }
-                ]
-              },
-              {
-                "Effect": "Allow",
-                "Action": [
-                  "execute-api:ManageConnections"
-                ],
-                "Resource": [
-                  "arn:aws:execute-api:ap-northeast-1:*:*/@connections/*"
-                ]
-              }
-            ]
-          }
-        },
         "artifactsS3KeyDirname": "serverless/dinner-match-serverless/dev/code-artifacts",
         "deploymentBucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
         "artifact": "D:\\Whats_the_dinner_tonight\\.serverless\\dinner-match-serverless.zip",
-        "artifactDirectoryName": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z"
+        "artifactDirectoryName": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z"
       },
       "functions": {
         "connect": {
@@ -996,7 +1026,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "ConnectLambdaVersionSmIeTpFw86bRCV9mzckCKciNEf62pA18RPBvfX7NUQk"
+          "versionLogicalId": "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE"
         },
         "disconnect": {
           "handler": "backend-serverless/websocket/disconnect.handler",
@@ -1013,7 +1043,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "DisconnectLambdaVersionfw8Aq4VHeX27YwXNFutkGEYEpzealyMTS7pZN4dX0"
+          "versionLogicalId": "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE"
         },
         "message": {
           "handler": "backend-serverless/websocket/message.handler",
@@ -1030,7 +1060,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "MessageLambdaVersionNJd4XjUpX7i2GJ9B1hDoSp8bx2eafLVbTq90S7uxWqs"
+          "versionLogicalId": "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc"
         },
         "getDishes": {
           "handler": "backend-serverless/http/dishes.handler",
@@ -1050,7 +1080,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "GetDishesLambdaVersionzvTyqn2bsthGwDSfRmFvVcIGg4gY516pgibvwUvdrHE"
+          "versionLogicalId": "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8"
         },
         "healthCheck": {
           "handler": "backend-serverless/http/health.handler",
@@ -1070,7 +1100,7 @@
           "timeout": 6,
           "runtime": "nodejs18.x",
           "vpc": {},
-          "versionLogicalId": "HealthCheckLambdaVersion8P0JbQ3tMBgXXz41Xy3801OTWUzzth4iLhHbF5odPU"
+          "versionLogicalId": "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0"
         }
       },
       "resources": {
@@ -1147,6 +1177,44 @@
       "environment": {
         "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
         "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
+      },
+      "iam": {
+        "role": {
+          "statements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:Query",
+                "dynamodb:Scan"
+              ],
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "ConnectionsTable",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::GetAtt": [
+                    "RoomsTable",
+                    "Arn"
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "execute-api:ManageConnections"
+              ],
+              "Resource": "arn:aws:execute-api:ap-northeast-1:*:*/@connections/*"
+            }
+          ]
+        }
       },
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
@@ -1244,6 +1312,38 @@
                       {
                         "Effect": "Allow",
                         "Action": [
+                          "dynamodb:PutItem",
+                          "dynamodb:GetItem",
+                          "dynamodb:UpdateItem",
+                          "dynamodb:DeleteItem",
+                          "dynamodb:Query",
+                          "dynamodb:Scan"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::GetAtt": [
+                              "ConnectionsTable",
+                              "Arn"
+                            ]
+                          },
+                          {
+                            "Fn::GetAtt": [
+                              "RoomsTable",
+                              "Arn"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "execute-api:ManageConnections"
+                        ],
+                        "Resource": "arn:aws:execute-api:ap-northeast-1:*:*/@connections/*"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
                           "execute-api:ManageConnections"
                         ],
                         "Resource": [
@@ -1277,7 +1377,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
               },
               "Handler": "backend-serverless/websocket/connect.handler",
               "Runtime": "nodejs18.x",
@@ -1306,7 +1406,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
               },
               "Handler": "backend-serverless/websocket/disconnect.handler",
               "Runtime": "nodejs18.x",
@@ -1335,7 +1435,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
               },
               "Handler": "backend-serverless/websocket/message.handler",
               "Runtime": "nodejs18.x",
@@ -1364,7 +1464,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
               },
               "Handler": "backend-serverless/http/dishes.handler",
               "Runtime": "nodejs18.x",
@@ -1393,7 +1493,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-                "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
               },
               "Handler": "backend-serverless/http/health.handler",
               "Runtime": "nodejs18.x",
@@ -1417,54 +1517,54 @@
               "HealthCheckLogGroup"
             ]
           },
-          "ConnectLambdaVersionSmIeTpFw86bRCV9mzckCKciNEf62pA18RPBvfX7NUQk": {
+          "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ConnectLambdaFunction"
               },
-              "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
             }
           },
-          "DisconnectLambdaVersionfw8Aq4VHeX27YwXNFutkGEYEpzealyMTS7pZN4dX0": {
+          "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DisconnectLambdaFunction"
               },
-              "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
             }
           },
-          "MessageLambdaVersionNJd4XjUpX7i2GJ9B1hDoSp8bx2eafLVbTq90S7uxWqs": {
+          "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "MessageLambdaFunction"
               },
-              "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
             }
           },
-          "GetDishesLambdaVersionzvTyqn2bsthGwDSfRmFvVcIGg4gY516pgibvwUvdrHE": {
+          "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GetDishesLambdaFunction"
               },
-              "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
             }
           },
-          "HealthCheckLambdaVersion8P0JbQ3tMBgXXz41Xy3801OTWUzzth4iLhHbF5odPU": {
+          "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HealthCheckLambdaFunction"
               },
-              "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
             }
           },
           "WebsocketsApi": {
@@ -1954,7 +2054,7 @@
           "ConnectLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ConnectLambdaVersionSmIeTpFw86bRCV9mzckCKciNEf62pA18RPBvfX7NUQk"
+              "Ref": "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE"
             },
             "Export": {
               "Name": "sls-dinner-match-serverless-dev-ConnectLambdaFunctionQualifiedArn"
@@ -1963,7 +2063,7 @@
           "DisconnectLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DisconnectLambdaVersionfw8Aq4VHeX27YwXNFutkGEYEpzealyMTS7pZN4dX0"
+              "Ref": "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE"
             },
             "Export": {
               "Name": "sls-dinner-match-serverless-dev-DisconnectLambdaFunctionQualifiedArn"
@@ -1972,7 +2072,7 @@
           "MessageLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "MessageLambdaVersionNJd4XjUpX7i2GJ9B1hDoSp8bx2eafLVbTq90S7uxWqs"
+              "Ref": "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc"
             },
             "Export": {
               "Name": "sls-dinner-match-serverless-dev-MessageLambdaFunctionQualifiedArn"
@@ -1981,7 +2081,7 @@
           "GetDishesLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GetDishesLambdaVersionzvTyqn2bsthGwDSfRmFvVcIGg4gY516pgibvwUvdrHE"
+              "Ref": "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8"
             },
             "Export": {
               "Name": "sls-dinner-match-serverless-dev-GetDishesLambdaFunctionQualifiedArn"
@@ -1990,7 +2090,7 @@
           "HealthCheckLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HealthCheckLambdaVersion8P0JbQ3tMBgXXz41Xy3801OTWUzzth4iLhHbF5odPU"
+              "Ref": "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0"
             },
             "Export": {
               "Name": "sls-dinner-match-serverless-dev-HealthCheckLambdaFunctionQualifiedArn"
@@ -2069,7 +2169,7 @@
       "serviceProvider": null,
       "instanceParameters": null
     },
-    "serviceRawFile": "service: dinner-match-serverless\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: ap-northeast-1\r\n  stage: ${opt:stage, 'dev'}\r\n  environment:\r\n    CONNECTIONS_TABLE: ${self:service}-connections-${self:provider.stage}\r\n    ROOMS_TABLE: ${self:service}-rooms-${self:provider.stage}\r\n\r\npackage:\r\n  patterns:\r\n    - '!.git/**'\r\n    - '!frontend/**'\r\n    - '!backend/**'\r\n    - '!node_modules/**'\r\n    - 'backend-serverless/**'\r\n  individually: false\r\n\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:PutItem\r\n            - dynamodb:GetItem\r\n            - dynamodb:UpdateItem\r\n            - dynamodb:DeleteItem\r\n            - dynamodb:Query\r\n            - dynamodb:Scan\r\n          Resource:\r\n            - !GetAtt ConnectionsTable.Arn\r\n            - !GetAtt RoomsTable.Arn\r\n        - Effect: Allow\r\n          Action:\r\n            - execute-api:ManageConnections\r\n          Resource:\r\n            - arn:aws:execute-api:${self:provider.region}:*:*/@connections/*\r\n\r\nfunctions:\r\n  # WebSocket handlers\r\n  connect:\r\n    handler: backend-serverless/websocket/connect.handler\r\n    events:\r\n      - websocket:\r\n          route: $connect\r\n  \r\n  disconnect:\r\n    handler: backend-serverless/websocket/disconnect.handler\r\n    events:\r\n      - websocket:\r\n          route: $disconnect\r\n  \r\n  message:\r\n    handler: backend-serverless/websocket/message.handler\r\n    events:\r\n      - websocket:\r\n          route: $default\r\n  \r\n  # HTTP API handlers\r\n  getDishes:\r\n    handler: backend-serverless/http/dishes.handler\r\n    events:\r\n      - httpApi:\r\n          path: /api/dishes\r\n          method: get\r\n  \r\n  healthCheck:\r\n    handler: backend-serverless/http/health.handler\r\n    events:\r\n      - httpApi:\r\n          path: /\r\n          method: get\r\n\r\nresources:\r\n  Resources:\r\n    ConnectionsTable:\r\n      Type: AWS::DynamoDB::Table\r\n      Properties:\r\n        TableName: ${self:provider.environment.CONNECTIONS_TABLE}\r\n        BillingMode: PAY_PER_REQUEST\r\n        AttributeDefinitions:\r\n          - AttributeName: connectionId\r\n            AttributeType: S\r\n          - AttributeName: roomCode\r\n            AttributeType: S\r\n        KeySchema:\r\n          - AttributeName: connectionId\r\n            KeyType: HASH\r\n        GlobalSecondaryIndexes:\r\n          - IndexName: roomCode-index\r\n            KeySchema:\r\n              - AttributeName: roomCode\r\n                KeyType: HASH\r\n            Projection:\r\n              ProjectionType: ALL\r\n    \r\n    RoomsTable:\r\n      Type: AWS::DynamoDB::Table\r\n      Properties:\r\n        TableName: ${self:provider.environment.ROOMS_TABLE}\r\n        BillingMode: PAY_PER_REQUEST\r\n        AttributeDefinitions:\r\n          - AttributeName: roomCode\r\n            AttributeType: S\r\n        KeySchema:\r\n          - AttributeName: roomCode\r\n            KeyType: HASH\r\n        TimeToLiveSpecification:\r\n          AttributeName: ttl\r\n          Enabled: true\r\n\r\n",
+    "serviceRawFile": "service: dinner-match-serverless\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: ap-northeast-1\r\n  stage: ${opt:stage, 'dev'}\r\n  environment:\r\n    CONNECTIONS_TABLE: ${self:service}-connections-${self:provider.stage}\r\n    ROOMS_TABLE: ${self:service}-rooms-${self:provider.stage}\r\n  iam:\r\n    role:\r\n      statements:\r\n        - Effect: Allow\r\n          Action:\r\n            - dynamodb:PutItem\r\n            - dynamodb:GetItem\r\n            - dynamodb:UpdateItem\r\n            - dynamodb:DeleteItem\r\n            - dynamodb:Query\r\n            - dynamodb:Scan\r\n          Resource:\r\n            - !GetAtt ConnectionsTable.Arn\r\n            - !GetAtt RoomsTable.Arn\r\n        - Effect: Allow\r\n          Action:\r\n            - execute-api:ManageConnections\r\n          Resource:\r\n            - arn:aws:execute-api:${self:provider.region}:*:*/@connections/*\r\n\r\npackage:\r\n  patterns:\r\n    - '!.git/**'\r\n    - '!frontend/**'\r\n    - '!backend/**'\r\n    - '!node_modules/**'\r\n    - 'backend-serverless/**'\r\n  individually: false\r\n\r\nfunctions:\r\n  # WebSocket handlers\r\n  connect:\r\n    handler: backend-serverless/websocket/connect.handler\r\n    events:\r\n      - websocket:\r\n          route: $connect\r\n  \r\n  disconnect:\r\n    handler: backend-serverless/websocket/disconnect.handler\r\n    events:\r\n      - websocket:\r\n          route: $disconnect\r\n  \r\n  message:\r\n    handler: backend-serverless/websocket/message.handler\r\n    events:\r\n      - websocket:\r\n          route: $default\r\n  \r\n  # HTTP API handlers\r\n  getDishes:\r\n    handler: backend-serverless/http/dishes.handler\r\n    events:\r\n      - httpApi:\r\n          path: /api/dishes\r\n          method: get\r\n  \r\n  healthCheck:\r\n    handler: backend-serverless/http/health.handler\r\n    events:\r\n      - httpApi:\r\n          path: /\r\n          method: get\r\n\r\nresources:\r\n  Resources:\r\n    ConnectionsTable:\r\n      Type: AWS::DynamoDB::Table\r\n      Properties:\r\n        TableName: ${self:provider.environment.CONNECTIONS_TABLE}\r\n        BillingMode: PAY_PER_REQUEST\r\n        AttributeDefinitions:\r\n          - AttributeName: connectionId\r\n            AttributeType: S\r\n          - AttributeName: roomCode\r\n            AttributeType: S\r\n        KeySchema:\r\n          - AttributeName: connectionId\r\n            KeyType: HASH\r\n        GlobalSecondaryIndexes:\r\n          - IndexName: roomCode-index\r\n            KeySchema:\r\n              - AttributeName: roomCode\r\n                KeyType: HASH\r\n            Projection:\r\n              ProjectionType: ALL\r\n    \r\n    RoomsTable:\r\n      Type: AWS::DynamoDB::Table\r\n      Properties:\r\n        TableName: ${self:provider.environment.ROOMS_TABLE}\r\n        BillingMode: PAY_PER_REQUEST\r\n        AttributeDefinitions:\r\n          - AttributeName: roomCode\r\n            AttributeType: S\r\n        KeySchema:\r\n          - AttributeName: roomCode\r\n            KeyType: HASH\r\n        TimeToLiveSpecification:\r\n          AttributeName: ttl\r\n          Enabled: true\r\n",
     "command": [
       "deploy"
     ],
@@ -2083,23 +2183,23 @@
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:ap-northeast-1:544205545730:stack/dinner-match-serverless-dev/f4337cd0-ffd4-11f0-b214-06455ac2b6cd",
     "serviceProviderAwsCfStackCreated": "2026-02-02T01:17:35.028Z",
     "serviceProviderAwsCfStackUpdated": "2026-02-02T02:07:05.019Z",
-    "serviceProviderAwsCfStackStatus": "CREATE_COMPLETE",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "HealthCheckLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-healthCheck:1",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-healthCheck:2",
         "Description": "Current Lambda function version",
         "ExportName": "sls-dinner-match-serverless-dev-HealthCheckLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "MessageLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-message:1",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-message:2",
         "Description": "Current Lambda function version",
         "ExportName": "sls-dinner-match-serverless-dev-MessageLambdaFunctionQualifiedArn"
       },
       {
         "OutputKey": "DisconnectLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-disconnect:1",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-disconnect:2",
         "Description": "Current Lambda function version",
         "ExportName": "sls-dinner-match-serverless-dev-DisconnectLambdaFunctionQualifiedArn"
       },
@@ -2111,7 +2211,7 @@
       },
       {
         "OutputKey": "ConnectLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-connect:1",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-connect:2",
         "Description": "Current Lambda function version",
         "ExportName": "sls-dinner-match-serverless-dev-ConnectLambdaFunctionQualifiedArn"
       },
@@ -2128,7 +2228,7 @@
       },
       {
         "OutputKey": "GetDishesLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-getDishes:1",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:544205545730:function:dinner-match-serverless-dev-getDishes:2",
         "Description": "Current Lambda function version",
         "ExportName": "sls-dinner-match-serverless-dev-GetDishesLambdaFunctionQualifiedArn"
       },
@@ -2234,6 +2334,38 @@
                     {
                       "Effect": "Allow",
                       "Action": [
+                        "dynamodb:PutItem",
+                        "dynamodb:GetItem",
+                        "dynamodb:UpdateItem",
+                        "dynamodb:DeleteItem",
+                        "dynamodb:Query",
+                        "dynamodb:Scan"
+                      ],
+                      "Resource": [
+                        {
+                          "Fn::GetAtt": [
+                            "ConnectionsTable",
+                            "Arn"
+                          ]
+                        },
+                        {
+                          "Fn::GetAtt": [
+                            "RoomsTable",
+                            "Arn"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "execute-api:ManageConnections"
+                      ],
+                      "Resource": "arn:aws:execute-api:ap-northeast-1:*:*/@connections/*"
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
                         "execute-api:ManageConnections"
                       ],
                       "Resource": [
@@ -2267,7 +2399,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-              "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+              "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
             },
             "Handler": "backend-serverless/websocket/connect.handler",
             "Runtime": "nodejs18.x",
@@ -2296,7 +2428,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-              "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+              "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
             },
             "Handler": "backend-serverless/websocket/disconnect.handler",
             "Runtime": "nodejs18.x",
@@ -2325,7 +2457,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-              "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+              "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
             },
             "Handler": "backend-serverless/websocket/message.handler",
             "Runtime": "nodejs18.x",
@@ -2354,7 +2486,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-              "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+              "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
             },
             "Handler": "backend-serverless/http/dishes.handler",
             "Runtime": "nodejs18.x",
@@ -2383,7 +2515,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
-              "S3Key": "serverless/dinner-match-serverless/dev/1769998016161-2026-02-02T02:06:56.161Z/dinner-match-serverless.zip"
+              "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
             },
             "Handler": "backend-serverless/http/health.handler",
             "Runtime": "nodejs18.x",
@@ -2407,54 +2539,54 @@
             "HealthCheckLogGroup"
           ]
         },
-        "ConnectLambdaVersionSmIeTpFw86bRCV9mzckCKciNEf62pA18RPBvfX7NUQk": {
+        "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "ConnectLambdaFunction"
             },
-            "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+            "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
           }
         },
-        "DisconnectLambdaVersionfw8Aq4VHeX27YwXNFutkGEYEpzealyMTS7pZN4dX0": {
+        "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "DisconnectLambdaFunction"
             },
-            "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+            "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
           }
         },
-        "MessageLambdaVersionNJd4XjUpX7i2GJ9B1hDoSp8bx2eafLVbTq90S7uxWqs": {
+        "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "MessageLambdaFunction"
             },
-            "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+            "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
           }
         },
-        "GetDishesLambdaVersionzvTyqn2bsthGwDSfRmFvVcIGg4gY516pgibvwUvdrHE": {
+        "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "GetDishesLambdaFunction"
             },
-            "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+            "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
           }
         },
-        "HealthCheckLambdaVersion8P0JbQ3tMBgXXz41Xy3801OTWUzzth4iLhHbF5odPU": {
+        "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "HealthCheckLambdaFunction"
             },
-            "CodeSha256": "QNVJJlyJTc7hUtT4yid+7QKO0dmzpjMS8szkIn3NPoA="
+            "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
           }
         },
         "WebsocketsApi": {
@@ -2944,7 +3076,7 @@
         "ConnectLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "ConnectLambdaVersionSmIeTpFw86bRCV9mzckCKciNEf62pA18RPBvfX7NUQk"
+            "Ref": "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE"
           },
           "Export": {
             "Name": "sls-dinner-match-serverless-dev-ConnectLambdaFunctionQualifiedArn"
@@ -2953,7 +3085,7 @@
         "DisconnectLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "DisconnectLambdaVersionfw8Aq4VHeX27YwXNFutkGEYEpzealyMTS7pZN4dX0"
+            "Ref": "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE"
           },
           "Export": {
             "Name": "sls-dinner-match-serverless-dev-DisconnectLambdaFunctionQualifiedArn"
@@ -2962,7 +3094,7 @@
         "MessageLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "MessageLambdaVersionNJd4XjUpX7i2GJ9B1hDoSp8bx2eafLVbTq90S7uxWqs"
+            "Ref": "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc"
           },
           "Export": {
             "Name": "sls-dinner-match-serverless-dev-MessageLambdaFunctionQualifiedArn"
@@ -2971,7 +3103,7 @@
         "GetDishesLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "GetDishesLambdaVersionzvTyqn2bsthGwDSfRmFvVcIGg4gY516pgibvwUvdrHE"
+            "Ref": "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8"
           },
           "Export": {
             "Name": "sls-dinner-match-serverless-dev-GetDishesLambdaFunctionQualifiedArn"
@@ -2980,7 +3112,7 @@
         "HealthCheckLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "HealthCheckLambdaVersion8P0JbQ3tMBgXXz41Xy3801OTWUzzth4iLhHbF5odPU"
+            "Ref": "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0"
           },
           "Export": {
             "Name": "sls-dinner-match-serverless-dev-HealthCheckLambdaFunctionQualifiedArn"
