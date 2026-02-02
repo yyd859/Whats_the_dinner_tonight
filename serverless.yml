@@ -8,16 +8,6 @@ provider:
   environment:
     CONNECTIONS_TABLE: ${self:service}-connections-${self:provider.stage}
     ROOMS_TABLE: ${self:service}-rooms-${self:provider.stage}
-
-package:
-  patterns:
-    - '!.git/**'
-    - '!frontend/**'
-    - '!backend/**'
-    - '!node_modules/**'
-    - 'backend-serverless/**'
-  individually: false
-
   iam:
     role:
       statements:
@@ -37,6 +27,15 @@ package:
             - execute-api:ManageConnections
           Resource:
             - arn:aws:execute-api:${self:provider.region}:*:*/@connections/*
+
+package:
+  patterns:
+    - '!.git/**'
+    - '!frontend/**'
+    - '!backend/**'
+    - '!node_modules/**'
+    - 'backend-serverless/**'
+  individually: false
 
 functions:
   # WebSocket handlers
@@ -110,4 +109,3 @@ resources:
         TimeToLiveSpecification:
           AttributeName: ttl
           Enabled: true
-
