@@ -29,44 +29,38 @@ provider:
             - arn:aws:execute-api:${self:provider.region}:*:*/@connections/*
 
 package:
-  patterns:
-    - '!.git/**'
-    - '!frontend/**'
-    - '!backend/**'
-    - '!node_modules/**'
-    - 'backend-serverless/**'
-  individually: false
+  individually: true
 
 functions:
   # WebSocket handlers
   connect:
-    handler: backend-serverless/websocket/connect.handler
+    handler: websocket/connect.handler
     events:
       - websocket:
           route: $connect
   
   disconnect:
-    handler: backend-serverless/websocket/disconnect.handler
+    handler: websocket/disconnect.handler
     events:
       - websocket:
           route: $disconnect
   
   message:
-    handler: backend-serverless/websocket/message.handler
+    handler: websocket/message.handler
     events:
       - websocket:
           route: $default
   
   # HTTP API handlers
   getDishes:
-    handler: backend-serverless/http/dishes.handler
+    handler: http/dishes.handler
     events:
       - httpApi:
           path: /api/dishes
           method: get
   
   healthCheck:
-    handler: backend-serverless/http/health.handler
+    handler: http/health.handler
     events:
       - httpApi:
           path: /
