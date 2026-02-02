@@ -21,6 +21,7 @@ provider:
             - dynamodb:Scan
           Resource:
             - !GetAtt ConnectionsTable.Arn
+            - !Join [ '/', [ !GetAtt ConnectionsTable.Arn, 'index', '*' ] ]
             - !GetAtt RoomsTable.Arn
         - Effect: Allow
           Action:
