@@ -1,15 +1,36 @@
 const express = require('express');
-const { createServer } = require('http');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const dishes = require('./data/dishes');
 
 const app = express();
-const httpServer = createServer(app);
+
 const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:5173";
-const io = new Server(httpServer, {
+
+// Decide whether to use HTTP or HTTPS
+let server;
+if (process.env.USE_HTTPS === 'true') {
+  try {
+    const privateKey = fs.readFileSync(process.env.SSL_KEY_PATH || 'key.pem', 'utf8');
+    const certificate = fs.readFileSync(process.env.SSL_CERT_PATH || 'cert.pem', 'utf8');
+    const credentials = { key: privateKey, cert: certificate };
+    server = https.createServer(credentials, app);
+    console.log('Running in HTTPS mode');
+  } catch (error) {
+    console.error('Failed to start HTTPS server, falling back to HTTP:', error.message);
+    server = http.createServer(app);
+  }
+} else {
+  server = http.createServer(app);
+  console.log('Running in HTTP mode');
+}
+
+const io = new Server(server, {
   cors: {
-    origin: corsOrigin, // Vite 默认端口
+    origin: corsOrigin,
     methods: ["GET", "POST"]
   }
 });
@@ -196,8 +217,11 @@ io.on('connection', (socket) => {
   });
 });
 
+
+
 const PORT = process.env.PORT || 3000;
 
-httpServer.listen(PORT, () => {
-  console.log(`服务器运行在 http://localhost:${PORT}`);
+server.listen(PORT, () => {
+  const protocol = process.env.USE_HTTPS === 'true' ? 'https' : 'http';
+  console.log(`Server is running at ${protocol}://localhost:${PORT}`);
 });

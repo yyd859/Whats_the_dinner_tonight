@@ -1,0 +1,1163 @@
+{
+  "service": {
+    "service": "dinner-match-serverless",
+    "serviceObject": {
+      "name": "dinner-match-serverless"
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs18.x",
+      "region": "ap-northeast-1",
+      "stage": "dev",
+      "environment": {
+        "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
+        "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
+      },
+      "iam": {
+        "role": {
+          "statements": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:Query",
+                "dynamodb:Scan"
+              ],
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "ConnectionsTable",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::GetAtt": [
+                    "RoomsTable",
+                    "Arn"
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "execute-api:ManageConnections"
+              ],
+              "Resource": "arn:aws:execute-api:ap-northeast-1:*:*/@connections/*"
+            }
+          ]
+        }
+      },
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ConnectLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/dinner-match-serverless-dev-connect"
+            }
+          },
+          "DisconnectLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/dinner-match-serverless-dev-disconnect"
+            }
+          },
+          "MessageLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/dinner-match-serverless-dev-message"
+            }
+          },
+          "GetDishesLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/dinner-match-serverless-dev-getDishes"
+            }
+          },
+          "HealthCheckLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/dinner-match-serverless-dev-healthCheck"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "dinner-match-serverless",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/dinner-match-serverless-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/dinner-match-serverless-dev*:*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][0]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iam\"][\"role\"][\"statements\"][1]"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "execute-api:ManageConnections"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:execute-api:*:*:*/@connections/*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "dinner-match-serverless",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "ConnectLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
+              },
+              "Handler": "backend-serverless/websocket/connect.handler",
+              "Runtime": "nodejs18.x",
+              "FunctionName": "dinner-match-serverless-dev-connect",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
+                  "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ConnectLogGroup"
+            ]
+          },
+          "DisconnectLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
+              },
+              "Handler": "backend-serverless/websocket/disconnect.handler",
+              "Runtime": "nodejs18.x",
+              "FunctionName": "dinner-match-serverless-dev-disconnect",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
+                  "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DisconnectLogGroup"
+            ]
+          },
+          "MessageLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
+              },
+              "Handler": "backend-serverless/websocket/message.handler",
+              "Runtime": "nodejs18.x",
+              "FunctionName": "dinner-match-serverless-dev-message",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
+                  "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "MessageLogGroup"
+            ]
+          },
+          "GetDishesLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
+              },
+              "Handler": "backend-serverless/http/dishes.handler",
+              "Runtime": "nodejs18.x",
+              "FunctionName": "dinner-match-serverless-dev-getDishes",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
+                  "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "GetDishesLogGroup"
+            ]
+          },
+          "HealthCheckLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
+                "S3Key": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z/dinner-match-serverless.zip"
+              },
+              "Handler": "backend-serverless/http/health.handler",
+              "Runtime": "nodejs18.x",
+              "FunctionName": "dinner-match-serverless-dev-healthCheck",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "CONNECTIONS_TABLE": "dinner-match-serverless-connections-dev",
+                  "ROOMS_TABLE": "dinner-match-serverless-rooms-dev"
+                }
+              },
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "HealthCheckLogGroup"
+            ]
+          },
+          "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ConnectLambdaFunction"
+              },
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
+            }
+          },
+          "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DisconnectLambdaFunction"
+              },
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
+            }
+          },
+          "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "MessageLambdaFunction"
+              },
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
+            }
+          },
+          "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetDishesLambdaFunction"
+              },
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
+            }
+          },
+          "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "HealthCheckLambdaFunction"
+              },
+              "CodeSha256": "JgNgWmm4CwuBx7XvRh3sz6/qmi3z8ywI9AMwbOh8xTg="
+            }
+          },
+          "WebsocketsApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-dinner-match-serverless-websockets",
+              "RouteSelectionExpression": "$request.body.action",
+              "Description": "Serverless Websockets",
+              "ProtocolType": "WEBSOCKET"
+            }
+          },
+          "ConnectWebsocketsIntegration": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "ConnectLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            }
+          },
+          "DisconnectWebsocketsIntegration": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "DisconnectLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            }
+          },
+          "MessageWebsocketsIntegration": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":apigateway:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":lambda:path/2015-03-31/functions/",
+                    {
+                      "Fn::GetAtt": [
+                        "MessageLambdaFunction",
+                        "Arn"
+                      ]
+                    },
+                    "/invocations"
+                  ]
+                ]
+              }
+            }
+          },
+          "ConnectLambdaPermissionWebsockets": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+              "WebsocketsApi",
+              "ConnectLambdaFunction"
+            ],
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ConnectLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com"
+            }
+          },
+          "DisconnectLambdaPermissionWebsockets": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+              "WebsocketsApi",
+              "DisconnectLambdaFunction"
+            ],
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DisconnectLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com"
+            }
+          },
+          "MessageLambdaPermissionWebsockets": {
+            "Type": "AWS::Lambda::Permission",
+            "DependsOn": [
+              "WebsocketsApi",
+              "MessageLambdaFunction"
+            ],
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "MessageLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com"
+            }
+          },
+          "SconnectWebsocketsRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "RouteKey": "$connect",
+              "AuthorizationType": "NONE",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "ConnectWebsocketsIntegration"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          "SdisconnectWebsocketsRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "RouteKey": "$disconnect",
+              "AuthorizationType": "NONE",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "DisconnectWebsocketsIntegration"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          "SdefaultWebsocketsRoute": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "RouteKey": "$default",
+              "AuthorizationType": "NONE",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "MessageWebsocketsIntegration"
+                    }
+                  ]
+                ]
+              }
+            }
+          },
+          "WebsocketsDeploymentStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "StageName": "dev",
+              "Description": "Serverless Websockets",
+              "DeploymentId": {
+                "Ref": "WebsocketsDeploymentKfLCByRXlPDDBAlEYDPt2NmMB7jW4tw2uPL7IOriQ4"
+              }
+            }
+          },
+          "WebsocketsDeploymentKfLCByRXlPDDBAlEYDPt2NmMB7jW4tw2uPL7IOriQ4": {
+            "Type": "AWS::ApiGatewayV2::Deployment",
+            "DependsOn": [
+              "SconnectWebsocketsRoute",
+              "SdisconnectWebsocketsRoute",
+              "SdefaultWebsocketsRoute"
+            ],
+            "Properties": {
+              "ApiId": {
+                "Ref": "WebsocketsApi"
+              },
+              "Description": "Serverless Websockets"
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-dinner-match-serverless",
+              "ProtocolType": "HTTP"
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
+          },
+          "GetDishesLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetDishesLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationGetDishes": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GetDishesLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGetApiDishes": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /api/dishes",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationGetDishes"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationGetDishes"
+          },
+          "HealthCheckLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "HealthCheckLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationHealthCheck": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"HealthCheckLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteGet": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationHealthCheck"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationHealthCheck"
+          },
+          "ConnectionsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "dinner-match-serverless-connections-dev",
+              "BillingMode": "PAY_PER_REQUEST",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "connectionId",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "roomCode",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "connectionId",
+                  "KeyType": "HASH"
+                }
+              ],
+              "GlobalSecondaryIndexes": [
+                {
+                  "IndexName": "roomCode-index",
+                  "KeySchema": [
+                    {
+                      "AttributeName": "roomCode",
+                      "KeyType": "HASH"
+                    }
+                  ],
+                  "Projection": {
+                    "ProjectionType": "ALL"
+                  }
+                }
+              ]
+            }
+          },
+          "RoomsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "dinner-match-serverless-rooms-dev",
+              "BillingMode": "PAY_PER_REQUEST",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "roomCode",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "roomCode",
+                  "KeyType": "HASH"
+                }
+              ],
+              "TimeToLiveSpecification": {
+                "AttributeName": "ttl",
+                "Enabled": true
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "ConnectLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE"
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-ConnectLambdaFunctionQualifiedArn"
+            }
+          },
+          "DisconnectLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE"
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-DisconnectLambdaFunctionQualifiedArn"
+            }
+          },
+          "MessageLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc"
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-MessageLambdaFunctionQualifiedArn"
+            }
+          },
+          "GetDishesLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8"
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-GetDishesLambdaFunctionQualifiedArn"
+            }
+          },
+          "HealthCheckLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0"
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-HealthCheckLambdaFunctionQualifiedArn"
+            }
+          },
+          "ServiceEndpointWebsocket": {
+            "Description": "URL of the service endpoint",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "wss://",
+                  {
+                    "Ref": "WebsocketsApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  },
+                  "/dev"
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-ServiceEndpointWebsocket"
+            }
+          },
+          "HttpApiId": {
+            "Description": "Id of the HTTP API",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-HttpApiId"
+            }
+          },
+          "HttpApiUrl": {
+            "Description": "URL of the HTTP API",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  }
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-dinner-match-serverless-dev-HttpApiUrl"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "pluginsData": {},
+    "functions": {
+      "connect": {
+        "handler": "backend-serverless/websocket/connect.handler",
+        "events": [
+          {
+            "websocket": {
+              "route": "$connect"
+            }
+          }
+        ],
+        "name": "dinner-match-serverless-dev-connect",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs18.x",
+        "vpc": {},
+        "versionLogicalId": "ConnectLambdaVersionyW8TY5gNc1gtQ6ddnV2t1aWT9M0AU6N3PXozUZH9rE"
+      },
+      "disconnect": {
+        "handler": "backend-serverless/websocket/disconnect.handler",
+        "events": [
+          {
+            "websocket": {
+              "route": "$disconnect"
+            }
+          }
+        ],
+        "name": "dinner-match-serverless-dev-disconnect",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs18.x",
+        "vpc": {},
+        "versionLogicalId": "DisconnectLambdaVersiontSFRdfEz9JOT2namdcGvIkMmEYiqho3aKi8jGgNE"
+      },
+      "message": {
+        "handler": "backend-serverless/websocket/message.handler",
+        "events": [
+          {
+            "websocket": {
+              "route": "$default"
+            }
+          }
+        ],
+        "name": "dinner-match-serverless-dev-message",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs18.x",
+        "vpc": {},
+        "versionLogicalId": "MessageLambdaVersion0OdMfs6RpC508Y6eoIiBSS5kWjeHrMLin6Nc6Q8Cc"
+      },
+      "getDishes": {
+        "handler": "backend-serverless/http/dishes.handler",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/api/dishes",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/api/dishes"
+          }
+        ],
+        "name": "dinner-match-serverless-dev-getDishes",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs18.x",
+        "vpc": {},
+        "versionLogicalId": "GetDishesLambdaVersionuENLV0OSsUW8h1Qomu9LHONvrWw7J0H5uHSLtWOmGP8"
+      },
+      "healthCheck": {
+        "handler": "backend-serverless/http/health.handler",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/"
+          }
+        ],
+        "name": "dinner-match-serverless-dev-healthCheck",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs18.x",
+        "vpc": {},
+        "versionLogicalId": "HealthCheckLambdaVersion5JvfIFjyDWELyx9avxqcKs05Wp1Y5rMKNREKbkGF0"
+      }
+    },
+    "resources": {
+      "Resources": {
+        "ConnectionsTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "dinner-match-serverless-connections-dev",
+            "BillingMode": "PAY_PER_REQUEST",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "connectionId",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "roomCode",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "connectionId",
+                "KeyType": "HASH"
+              }
+            ],
+            "GlobalSecondaryIndexes": [
+              {
+                "IndexName": "roomCode-index",
+                "KeySchema": [
+                  {
+                    "AttributeName": "roomCode",
+                    "KeyType": "HASH"
+                  }
+                ],
+                "Projection": {
+                  "ProjectionType": "ALL"
+                }
+              }
+            ]
+          }
+        },
+        "RoomsTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "dinner-match-serverless-rooms-dev",
+            "BillingMode": "PAY_PER_REQUEST",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "roomCode",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "roomCode",
+                "KeyType": "HASH"
+              }
+            ],
+            "TimeToLiveSpecification": {
+              "AttributeName": "ttl",
+              "Enabled": true
+            }
+          }
+        }
+      },
+      "Outputs": {}
+    },
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless",
+    "initialServerlessConfig": {
+      "service": "dinner-match-serverless",
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "package": {
+        "patterns": [
+          "!.git/**",
+          "!frontend/**",
+          "!backend/**",
+          "!node_modules/**",
+          "backend-serverless/**"
+        ],
+        "individually": false,
+        "artifactsS3KeyDirname": "serverless/dinner-match-serverless/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-ap-northeast-1-edcbb3e2-7a02",
+        "artifact": "D:\\Whats_the_dinner_tonight\\.serverless\\dinner-match-serverless.zip",
+        "artifactDirectoryName": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z"
+      },
+      "functions": {
+        "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
+      }
+    },
+    "appId": null,
+    "orgId": null,
+    "layers": {},
+    "artifact": "D:\\Whats_the_dinner_tonight\\.serverless\\dinner-match-serverless.zip"
+  },
+  "package": {
+    "individually": false,
+    "artifactDirectoryName": "serverless/dinner-match-serverless/dev/1770001043061-2026-02-02T02:57:23.061Z",
+    "artifact": "dinner-match-serverless.zip"
+  }
+}

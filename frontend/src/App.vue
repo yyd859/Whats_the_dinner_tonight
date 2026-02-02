@@ -105,11 +105,11 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { io } from 'socket.io-client';
 import SwipeCard from './components/SwipeCard.vue';
 
-const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
-let socket = null;
+const socketUrl = import.meta.env.VITE_SOCKET_URL || 'ws://localhost:3000';
+let ws = null;
+let reconnectTimeout = null;
 
 const appError = ref('');
 
@@ -133,22 +133,21 @@ const matches = ref([]);
 const showMatchAnimation = ref(false);
 const lastMatch = ref(null);
 
+// WebSocket 消息发送
+const sendMessage = (action, data = {}) => {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ action, data }));
+  } else {
+    console.error('WebSocket is not connected');
+    errorMessage.value = 'WebSocket 未连接';
+  }
+};
+
 // 创建房间
 const createRoom = () => {
   connecting.value = true;
   errorMessage.value = '';
-
-  socket.emit('create-room', (response) => {
-    connecting.value = false;
-    if (response.success) {
-      roomCode.value = response.roomCode;
-      dishes.value = response.dishes;
-      currentDish.value = dishes.value[0];
-      userCount.value = 1;
-    } else {
-      errorMessage.value = '创建房间失败';
-    }
-  });
+  sendMessage('create-room');
 };
 
 // 加入房间
@@ -157,18 +156,7 @@ const joinRoom = () => {
 
   connecting.value = true;
   errorMessage.value = '';
-
-  socket.emit('join-room', { roomCode: joinRoomCode.value.toUpperCase() }, (response) => {
-    connecting.value = false;
-    if (response.success) {
-      roomCode.value = response.roomCode;
-      dishes.value = response.dishes;
-      currentDish.value = dishes.value[0];
-      userCount.value = response.userCount;
-    } else {
-      errorMessage.value = response.message || '加入房间失败';
-    }
-  });
+  sendMessage('join-room', { roomCode: joinRoomCode.value.toUpperCase() });
 };
 
 // 复制房间号
@@ -181,7 +169,7 @@ const copyRoomCode = () => {
 const handleSwipe = (direction) => {
   const liked = direction === 'right';
 
-  socket.emit('swipe', {
+  sendMessage('swipe', {
     roomCode: roomCode.value,
     dishId: currentDish.value.id,
     liked
@@ -198,57 +186,121 @@ const handleSwipe = (direction) => {
 
 // 重置房间
 const resetRoom = () => {
-  socket.emit('reset-room', { roomCode: roomCode.value });
+  sendMessage('reset-room', { roomCode: roomCode.value });
+};
+
+// 连接 WebSocket
+const connectWebSocket = () => {
+  try {
+    console.log('Connecting to WebSocket URL:', socketUrl);
+    ws = new WebSocket(socketUrl);
+
+    ws.onopen = () => {
+      console.log('WebSocket connected');
+      errorMessage.value = '';
+      connecting.value = false;
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        console.log('Received message:', message);
+
+        switch (message.type) {
+          case 'room-created':
+            connecting.value = false;
+            if (message.data.success) {
+              roomCode.value = message.data.roomCode;
+              dishes.value = message.data.dishes;
+              currentDish.value = dishes.value[0];
+              userCount.value = 1;
+            } else {
+              errorMessage.value = '创建房间失败';
+            }
+            break;
+
+          case 'room-joined':
+            connecting.value = false;
+            if (message.data.success) {
+              roomCode.value = message.data.roomCode;
+              dishes.value = message.data.dishes;
+              currentDish.value = dishes.value[0];
+              userCount.value = message.data.userCount;
+            }
+            break;
+
+          case 'join-error':
+            connecting.value = false;
+            errorMessage.value = message.data.message || '加入房间失败';
+            break;
+
+          case 'user-joined':
+            userCount.value = 2;
+            break;
+
+          case 'user-left':
+            userCount.value = 1;
+            break;
+
+          case 'match-found':
+            matches.value.push(message.data.dish);
+            lastMatch.value = message.data.dish;
+            showMatchAnimation.value = true;
+
+            setTimeout(() => {
+              showMatchAnimation.value = false;
+            }, 3000);
+            break;
+
+          case 'room-reset':
+            matches.value = [];
+            currentIndex.value = 0;
+            if (message.data && message.data.dishes) {
+              dishes.value = message.data.dishes;
+            }
+            currentDish.value = dishes.value[0];
+            break;
+
+          default:
+            console.log('Unknown message type:', message.type);
+        }
+      } catch (error) {
+        console.error('Error parsing message:', error);
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      errorMessage.value = `连接服务器失败 (URL: ${socketUrl})`;
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket disconnected');
+      // 尝试重连（如果用户还在房间里）
+      if (roomCode.value) {
+        reconnectTimeout = setTimeout(() => {
+          console.log('Attempting to reconnect...');
+          connectWebSocket();
+        }, 3000);
+      }
+    };
+  } catch (e) {
+    handleError(e);
+  }
 };
 
 // Socket 事件监听
 onMounted(() => {
-  try {
-    console.log('Connecting to socket URL:', socketUrl);
-    socket = io(socketUrl, {
-      transports: ['websocket', 'polling'] // force generic transports
-    });
-    
-    socket.on('connect_error', (err) => {
-      console.error('Socket connection error:', err);
-      // Don't show alert immediately to avoid annoyance, but log it
-      errorMessage.value = `连接服务器失败: ${err.message} (URL: ${socketUrl})`;
-    });
-
-    socket.on('user-joined', () => {
-      userCount.value = 2;
-    });
-
-    socket.on('user-left', () => {
-      userCount.value = 1;
-    });
-
-    socket.on('match-found', ({ dish }) => {
-      matches.value.push(dish);
-      lastMatch.value = dish;
-      showMatchAnimation.value = true;
-
-      setTimeout(() => {
-        showMatchAnimation.value = false;
-      }, 3000);
-    });
-
-    socket.on('room-reset', (data) => {
-      matches.value = [];
-      currentIndex.value = 0;
-      // 使用服务器发送的新打乱顺序
-      if (data && data.dishes) {
-        dishes.value = data.dishes;
-      }
-      currentDish.value = dishes.value[0];
-    });
-  } catch (e) {
-    handleError(e);
-  }
+  connectWebSocket();
 });
 
 onUnmounted(() => {
-  socket.disconnect();
+  if (reconnectTimeout) {
+    clearTimeout(reconnectTimeout);
+  }
+  if (ws) {
+    ws.close();
+  }
 });
 </script>
 
