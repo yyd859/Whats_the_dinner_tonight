@@ -10,13 +10,19 @@ const ROOMS_TABLE = process.env.ROOMS_TABLE;
 
 // DynamoDB operations
 async function saveConnection(connectionId, roomCode = null) {
+    const Item = {
+        connectionId,
+        connectedAt: Date.now()
+    };
+
+    // 只有在有 roomCode 时才加入 Item，避免 DynamoDB GSI 报错
+    if (roomCode) {
+        Item.roomCode = roomCode;
+    }
+
     await ddbDocClient.send(new PutCommand({
         TableName: CONNECTIONS_TABLE,
-        Item: {
-            connectionId,
-            roomCode,
-            connectedAt: Date.now()
-        }
+        Item: Item
     }));
 }
 
