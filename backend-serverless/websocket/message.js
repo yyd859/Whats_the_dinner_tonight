@@ -16,19 +16,12 @@ const dishes = require('../lib/dishes');
 function getFilteredDishes(categories) {
     if (!categories || categories.length === 0) return dishes;
 
-    return dishes.filter(dish => {
-        // 大菜：经典四大菜系
-        if (categories.includes('big')) {
-            const bigCats = ["川菜", "粤菜", "湘菜", "鲁菜"];
-            if (bigCats.includes(dish.category)) return true;
-        }
-        // 家常菜：家常相关分类
-        if (categories.includes('home')) {
-            const homeCats = ["家常菜", "素菜", "凉菜", "汤类", "主食"];
-            if (homeCats.includes(dish.category)) return true;
-        }
-        return false;
-    });
+    const categoryMap = {
+        'big': '大菜',
+        'home': '家常菜'
+    };
+    const allowed = categories.map(c => categoryMap[c]).filter(Boolean);
+    return dishes.filter(dish => allowed.includes(dish.category));
 }
 
 exports.handler = async (event) => {
