@@ -27,6 +27,24 @@
           <span class="tag difficulty">难度：{{ dish.difficulty }}</span>
         </div>
       </div>
+      
+      <!-- 菜谱展开按钮 -->
+      <div class="recipe-toggle" @click.stop="toggleRecipe" @mousedown.stop @touchstart.stop>
+        <span>▼</span>
+      </div>
+    </div>
+
+    <!-- 菜谱弹窗 -->
+    <div v-if="showRecipe" class="recipe-modal-overlay" @click.stop="toggleRecipe" @mousedown.stop @touchstart.stop>
+      <div class="recipe-modal" @click.stop @mousedown.stop @touchstart.stop>
+        <div class="recipe-header">
+          <h3>📋 {{ dish.name }} 做法</h3>
+          <button class="close-btn" @click.stop="toggleRecipe">✕</button>
+        </div>
+        <div class="recipe-body">
+          <p>{{ dish.recipe || '这里是绝密菜谱的占位符：\n1. 准备好新鲜食材~\n2. 注入满满的爱意开始烹饪！\n3. 出锅装盘，尽情享用😋' }}</p>
+        </div>
+      </div>
     </div>
 
     <!-- 操作按钮 -->
@@ -61,6 +79,12 @@ const startX = ref(0);
 const startY = ref(0);
 const currentX = ref(0);
 const currentY = ref(0);
+
+const showRecipe = ref(false);
+
+const toggleRecipe = () => {
+  showRecipe.value = !showRecipe.value;
+};
 
 const cardStyle = computed(() => {
   if (!isDragging.value && currentX.value === 0) {
@@ -215,6 +239,7 @@ const handleDislike = () => {
 
 .card-content {
   padding: 20px;
+  padding-bottom: 40px;
 }
 
 .card-content h2 {
@@ -307,5 +332,128 @@ const handleDislike = () => {
 
 .action-btn.like:hover {
   background: #d1fae5;
+}
+
+.recipe-toggle {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.recipe-toggle:hover {
+  color: #888;
+}
+
+.recipe-toggle span {
+  font-size: 1rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+.recipe-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.recipe-modal {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 340px;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.recipe-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+}
+
+.recipe-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #334155;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: color 0.2s;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.close-btn:hover {
+  color: #475569;
+}
+
+.recipe-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.recipe-body p {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: #475569;
+  font-size: 0.95rem;
 }
 </style>
