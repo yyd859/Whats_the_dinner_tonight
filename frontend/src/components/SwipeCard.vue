@@ -21,10 +21,26 @@
       </div>
       <div class="card-content">
         <h2>{{ dish.name }}</h2>
-        <p class="description">{{ dish.description }}</p>
         <div class="tags">
           <span class="tag category">{{ dish.category }}</span>
-          <span class="tag difficulty">难度：{{ dish.difficulty }}</span>
+        </div>
+      </div>
+      
+      <!-- 菜谱展开按钮 -->
+      <div class="recipe-toggle" @click.stop="toggleRecipe" @mousedown.stop @touchstart.stop>
+        <span>▼</span>
+      </div>
+    </div>
+
+    <!-- 菜谱弹窗 -->
+    <div v-if="showRecipe" class="recipe-modal-overlay" @click.stop="toggleRecipe" @mousedown.stop @touchstart.stop>
+      <div class="recipe-modal" @click.stop @mousedown.stop @touchstart.stop>
+        <div class="recipe-header">
+          <h3>📋 {{ dish.name }} 做法</h3>
+          <button class="close-btn" @click.stop="toggleRecipe">✕</button>
+        </div>
+        <div class="recipe-body">
+          <p>{{ dish.recipe ? recipeContent : '菜谱即将上线，敬请期待～' }}</p>
         </div>
       </div>
       
@@ -81,8 +97,17 @@ const currentX = ref(0);
 const currentY = ref(0);
 
 const showRecipe = ref(false);
+const recipeContent = ref('');
 
-const toggleRecipe = () => {
+const toggleRecipe = async () => {
+  if (!showRecipe.value && props.dish.recipe) {
+    try {
+      const res = await fetch(props.dish.recipe);
+      recipeContent.value = await res.text();
+    } catch {
+      recipeContent.value = '菜谱加载失败，请稍后再试';
+    }
+  }
   showRecipe.value = !showRecipe.value;
 };
 
@@ -248,12 +273,6 @@ const handleDislike = () => {
   color: #333;
 }
 
-.description {
-  color: #666;
-  margin-bottom: 15px;
-  line-height: 1.5;
-}
-
 .tags {
   display: flex;
   gap: 10px;
@@ -272,10 +291,6 @@ const handleDislike = () => {
   color: #667eea;
 }
 
-.tag.difficulty {
-  background: #fef3c7;
-  color: #d97706;
-}
 
 .action-buttons {
   display: flex;
