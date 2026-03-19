@@ -1,352 +1,114 @@
 [
   {
     "id": 1,
-    "name": "宫保鸡丁",
+    "name": "烤鱼",
     "image": "/dishes/kaoyu.jpg",
     "category": "大菜",
-    "recipe": "/recipes/gong-bao-ji-ding.txt"
+    "recipe": "/recipes/kaoyu.txt"
   },
   {
     "id": 2,
-    "name": "麻婆豆腐",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "番茄炒蛋",
+    "image": "/dishes/fanqiechaodan.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/fanqiechaodan.txt"
   },
   {
     "id": 3,
-    "name": "鱼香肉丝",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "红烧鸡翅",
+    "image": "/dishes/hongshaojiichi.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/hongshaojiichi.txt"
   },
   {
     "id": 4,
-    "name": "水煮牛肉",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "意大利肉酱面",
+    "image": "/dishes/yidaliroujiangmian.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/yidaliujiangmian.txt"
   },
   {
     "id": 5,
-    "name": "回锅肉",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "韩式豆腐汤",
+    "image": "/dishes/hanshidoufutang.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/hanshidoufutang.txt"
   },
   {
     "id": 6,
-    "name": "酸菜鱼",
-    "image": null,
+    "name": "广西酸汤火锅",
+    "image": "/dishes/guangxisuantanghuoguo.jpg",
     "category": "大菜",
-    "recipe": null
+    "recipe": "/recipes/guangxisuantanghuoguo.txt"
   },
   {
     "id": 7,
-    "name": "水煮鱼",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "小炒黄牛肉",
+    "image": "/dishes/xiaochaohuangniurou.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/xiaochaohuangniurou.txt"
   },
   {
     "id": 8,
-    "name": "辣子鸡",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "卤肉饭",
+    "image": "/dishes/luroufan.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/luroufan.txt"
   },
   {
     "id": 9,
-    "name": "夫妻肺片",
-    "image": null,
+    "name": "卤味猪蹄",
+    "image": "/dishes/luweizhuti.jpg",
     "category": "大菜",
-    "recipe": null
+    "recipe": "/recipes/luweizhuti.txt"
   },
   {
     "id": 10,
-    "name": "清蒸鲈鱼",
-    "image": null,
+    "name": "卤味牛腱肉",
+    "image": "/dishes/luweiniujianrou.jpg",
     "category": "大菜",
-    "recipe": null
+    "recipe": "/recipes/luweiniujianrou.txt"
   },
   {
     "id": 11,
-    "name": "白切鸡",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "番茄蛋汤",
+    "image": "/dishes/fanqiedantang.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/fanqiedantang.txt"
   },
   {
     "id": 12,
-    "name": "蜜汁叉烧",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "嫩滑蒸蛋",
+    "image": "/dishes/nenhuazhengdan.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/nenhuazhengdan.txt"
   },
   {
     "id": 13,
-    "name": "虾饺",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "养生鸡汤",
+    "image": "/dishes/yangshenjitang.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/yangshenjitang.txt"
   },
   {
     "id": 14,
-    "name": "烧鹅",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "番茄炖排骨汤",
+    "image": "/dishes/fanqiedunpaigutang.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/fanqiedunpaigutang.txt"
   },
   {
     "id": 15,
-    "name": "肠粉",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
+    "name": "豆角炖排骨",
+    "image": "/dishes/doujiaodunpaigu.jpg",
+    "category": "家常菜",
+    "recipe": "/recipes/doujiaodunpaigu.txt"
   },
   {
     "id": 16,
-    "name": "剁椒鱼头",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
-  },
-  {
-    "id": 17,
-    "name": "小炒肉",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
-  },
-  {
-    "id": 18,
-    "name": "口味虾",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
-  },
-  {
-    "id": 19,
-    "name": "糖醋鲤鱼",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
-  },
-  {
-    "id": 20,
-    "name": "葱烧海参",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
-  },
-  {
-    "id": 21,
-    "name": "九转大肠",
-    "image": null,
-    "category": "大菜",
-    "recipe": null
-  },
-  {
-    "id": 22,
-    "name": "番茄炒蛋",
-    "image": null,
+    "name": "罗宋汤",
+    "image": "/dishes/luosongtang.jpg",
     "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 23,
-    "name": "红烧肉",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 24,
-    "name": "青椒肉丝",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 25,
-    "name": "糖醋排骨",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 26,
-    "name": "土豆炖牛肉",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 27,
-    "name": "西红柿牛腩",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 28,
-    "name": "红烧茄子",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 29,
-    "name": "酸辣土豆丝",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 30,
-    "name": "可乐鸡翅",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 31,
-    "name": "红烧排骨",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 32,
-    "name": "啤酒鸭",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 33,
-    "name": "蒜蓉西兰花",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 34,
-    "name": "炒青菜",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 35,
-    "name": "干煸四季豆",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 36,
-    "name": "地三鲜",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 37,
-    "name": "醋溜白菜",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 38,
-    "name": "凉拌黄瓜",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 39,
-    "name": "蒜泥白肉",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 40,
-    "name": "皮蛋豆腐",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 41,
-    "name": "口水鸡",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 42,
-    "name": "蛋炒饭",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 43,
-    "name": "扬州炒饭",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 44,
-    "name": "饺子",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 45,
-    "name": "炸酱面",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 46,
-    "name": "葱油拌面",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 47,
-    "name": "小笼包",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 48,
-    "name": "葱油饼",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 49,
-    "name": "酸辣汤",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
-  },
-  {
-    "id": 50,
-    "name": "紫菜蛋花汤",
-    "image": null,
-    "category": "家常菜",
-    "recipe": null
+    "recipe": "/recipes/luosongtang.txt"
   }
 ]
