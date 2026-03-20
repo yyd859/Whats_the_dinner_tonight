@@ -43,24 +43,6 @@
           <p>{{ dish.recipe ? recipeContent : '菜谱即将上线，敬请期待～' }}</p>
         </div>
       </div>
-      
-      <!-- 菜谱展开按钮 -->
-      <div class="recipe-toggle" @click.stop="toggleRecipe" @mousedown.stop @touchstart.stop>
-        <span>▼</span>
-      </div>
-    </div>
-
-    <!-- 菜谱弹窗 -->
-    <div v-if="showRecipe" class="recipe-modal-overlay" @click.stop="toggleRecipe" @mousedown.stop @touchstart.stop>
-      <div class="recipe-modal" @click.stop @mousedown.stop @touchstart.stop>
-        <div class="recipe-header">
-          <h3>📋 {{ dish.name }} 做法</h3>
-          <button class="close-btn" @click.stop="toggleRecipe">✕</button>
-        </div>
-        <div class="recipe-body">
-          <p>{{ dish.recipe || '这里是绝密菜谱的占位符：\n1. 准备好新鲜食材~\n2. 注入满满的爱意开始烹饪！\n3. 出锅装盘，尽情享用😋' }}</p>
-        </div>
-      </div>
     </div>
 
     <!-- 操作按钮 -->
